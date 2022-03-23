@@ -27,9 +27,9 @@ class PeopleSpider(scrapy.Spider):
     # start_urls = pd.read_csv('people_wikis.csv')
 
     start_urls = ['http://en.wikipedia.org/wiki/Robert_Reich',
-                  # 'http://en.wikipedia.org/wiki/Yuval_Noah_Harari',
-                  # 'http://en.wikipedia.org/wiki/Barack_Obama',
-                  # 'http://en.wikipedia.org/wiki/Warren_Buffet',
+                  'http://en.wikipedia.org/wiki/Yuval_Noah_Harari',
+                  'http://en.wikipedia.org/wiki/Barack_Obama',
+                  'http://en.wikipedia.org/wiki/Warren_Buffet',
                   'http://en.wikipedia.org/wiki/John_Kerry']
 
     def parse(self, response):
@@ -70,10 +70,11 @@ class PeopleSpider(scrapy.Spider):
                         schools, degrees = self.get_education_data(my_odd_list, my_even_list)
                         people_dict['schools'] += schools
                         people_dict['degrees'] += degrees
-                        # continue
+                        continue
                     if label == 'spouse(s)':
                         print("======== SPOUSE(S) =======")
                         people_dict, spouses_dict = self.get_spouse_data(tr, people_dict, spouses_dict)
+                        continue
                     if tr.xpath('th/a/text()').get():
                         label2 = tr.xpath('th/a/text()').get()
                         label += label2
@@ -101,20 +102,22 @@ class PeopleSpider(scrapy.Spider):
         return schools_list, degrees_list
 
     def get_spouse_data(self, my_spouse_data, my_people_dict, my_spouses_dict):
+        spouse_list = []
         # if my_spouse_data.xpath('td/descendant-or-self::*/@href').get() not in [None, '']:
         if my_spouse_data.xpath('td//@href').get() not in [None, '']:
             spouse_href = my_spouse_data.xpath('td//@href')
             print(len(spouse_href))
             for wiki in spouse_href:
                 spouse_name = wiki.get().split('/')[-1].replace('_', ' ')
-                # my_people_dict['spouse'] += spouse_name
+                spouse_list.append(spouse_name)
                 my_spouses_dict[spouse_name] = wiki.get()
                 print(spouse_name)
                 print(f"wiki: {wiki.get()}")
+            my_people_dict['spouses'] = spouse_list
         # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
-        elif my_spouse_data.xpath('td//div/text()').get() not in [None, '']:
-            spouse_name = my_spouse_data.xpath('td//div/text()').get()
-            # my_people_dict['spouse'] += spouse_name
+        elif my_spouse_data.xpath('td//text()').get() not in [None, '']:
+            spouse_name = my_spouse_data.xpath('td//text()').get()
+            my_people_dict['spouses'] = spouse_name
             print(spouse_name)
         else:
             my_people_dict['spouse'] += 'unknown'
