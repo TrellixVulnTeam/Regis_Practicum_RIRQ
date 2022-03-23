@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Regis_Practicum.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Regis_Practicum.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds get_education_data() to build school and degree lists.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" afterDir="false" />
     </list>
@@ -19,11 +16,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="87">
-              <caret line="71" selection-start-line="71" selection-end-line="71" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="17">
+              <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -49,8 +43,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="12" />
-    <option name="y" value="30" />
+    <option name="x" value="10" />
+    <option name="y" value="25" />
     <option name="width" value="3260" />
     <option name="height" value="1905" />
   </component>
@@ -121,13 +115,21 @@
       <option name="presentableId" value="Default" />
       <updated>1646518890980</updated>
     </task>
+    <task id="LOCAL-00001" summary="Adds get_education_data() to build school and degree lists.">
+      <created>1647239407713</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1647239407713</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="5" y="12" width="1304" height="762" extended-state="0" />
+    <frame x="4" y="10" width="1304" height="762" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1035313" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.10834671" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -138,8 +140,8 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" weight="0.32911393" />
-      <window_info anchor="bottom" id="Terminal" order="8" weight="0.24683544" />
-      <window_info active="true" anchor="bottom" id="Python Console" order="9" visible="true" weight="0.32911393" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" visible="true" weight="0.24683544" />
+      <window_info anchor="bottom" id="Python Console" order="9" weight="0.32911393" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" weight="0.32919255" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -148,14 +150,15 @@
       <window_info anchor="right" id="R Packages" order="4" />
     </layout>
   </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Adds get_education_data() to build school and degree lists." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds get_education_data() to build school and degree lists." />
+  </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="87">
-          <caret line="71" selection-start-line="71" selection-end-line="71" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="1" column="19" selection-start-line="1" selection-start-column="19" selection-end-line="1" selection-end-column="19" />
         </state>
       </provider>
     </entry>

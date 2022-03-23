@@ -1,4 +1,5 @@
 import scrapy
+import pandas as pd
 from scrapy import Selector
 from collections import defaultdict
 import re
@@ -22,11 +23,12 @@ DEGREE_RGX = re.compile(r'"\s(".*>.*</a>.*).*</')
 
 class PeopleSpider(scrapy.Spider):
     name = 'people'
-    allowed_domains = ['en.wikipedia.org/wiki/']
+    allowed_domains = ['en.wikipedia.org']
+    # start_urls = pd.read_csv('people_wikis.csv')
     start_urls = ['http://en.wikipedia.org/wiki/Robert_Reich',
-                  'http://en.wikipedia.org/wiki/Yuval_Noah_Harari',
-                  'http://en.wikipedia.org/wiki/Barack_Obama',
-                  'http://en.wikipedia.org/wiki/Warren_Buffet',
+                  # 'http://en.wikipedia.org/wiki/Yuval_Noah_Harari',
+                  # 'http://en.wikipedia.org/wiki/Barack_Obama',
+                  # 'http://en.wikipedia.org/wiki/Warren_Buffet',
                   'http://en.wikipedia.org/wiki/John_Kerry']
 
     def parse(self, response):
@@ -49,6 +51,9 @@ class PeopleSpider(scrapy.Spider):
         people_dict['degrees'] = []
         people_dict['name'] = my_infobox_trs[0].xpath('th/div/text()').get()
 
+        spouses_dict = defaultdict()
+
+        print("======== NEXT PERSON ========")
         for tr in my_infobox_trs:
             if tr.xpath('th'):
                 if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
@@ -66,6 +71,9 @@ class PeopleSpider(scrapy.Spider):
                         people_dict['schools'] += schools
                         people_dict['degrees'] += degrees
                         continue
+                    if label == 'spouse(s)':
+                        print("======== SPOUSE(S) =======")
+                        people_dict, spouses_dict = self.get_spouse_page(tr, people_dict, spouses_dict)
                     if tr.xpath('th/a/text()').get():
                         label2 = tr.xpath('th/a/text()').get()
                         label += label2
@@ -78,6 +86,7 @@ class PeopleSpider(scrapy.Spider):
                         val = tr.xpath('td/text()').get()
                     people_dict[label] = val
         print(people_dict)
+        print(spouses_dict)
 
     def get_education_data(self, my_list1, my_list2):
         schools_list = []
@@ -90,3 +99,25 @@ class PeopleSpider(scrapy.Spider):
                     degrees_list.append(item)
 
         return schools_list, degrees_list
+
+    def get_spouse_page(self, my_spouse_data, my_people_dict, my_spouses_dict):
+        # if my_spouse_data.xpath('td/descendant-or-self::*/@href').get() not in [None, '']:
+        if my_spouse_data.xpath('td//@href').get() not in [None, '']:
+            spouse_href = my_spouse_data.xpath('td//@href')
+            print(len(spouse_href))
+            for wiki in spouse_href:
+                spouse_name = wiki.get().split('/')[-1].replace('_', ' ')
+                # my_people_dict['spouse'] += spouse_name
+                # my_spouses_dict[spouse_name] = wiki.get()
+                print(spouse_name)
+                print(f"wiki: {wiki.get()}")
+        # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
+        elif my_spouse_data.xpath('td//div/text()').get() not in [None, '']:
+            spouse_name = my_spouse_data.xpath('//@href').get()
+            my_people_dict['spouse'] += spouse_name
+            print(spouse_name)
+        else:
+            my_people_dict['spouse'] += 'unknown'
+            print(f"Spouse cannot be retrieved from {my_spouse_data}")
+
+        return my_people_dict, my_spouses_dict
