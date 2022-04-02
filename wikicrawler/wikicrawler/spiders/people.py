@@ -21,6 +21,7 @@ NBSP = "\xa0"
 VCARD_TABLE_CLASS = re.compile(r'infobox.*vcard')
 DEGREE_RGX = re.compile(r'"\s(".*>.*</a>.*).*</')
 
+
 def make_urls_list(my_url_base):
     urls_list = []
     with open('people.csv', 'r') as file:
@@ -30,6 +31,15 @@ def make_urls_list(my_url_base):
             my_url = my_url_base + line[0]
             print(f"my_url:{my_url}")
             urls_list.append(my_url)
+
+    with open('all_people.csv', 'r') as file:
+        csvFile = csv.reader(file)
+        for line in csvFile:
+            print(line)
+            my_url = my_url_base + line[0]
+            print(f"my_url:{my_url}")
+            urls_list.append(my_url)
+
     return urls_list
 
 
@@ -49,6 +59,7 @@ class PeopleSpider(scrapy.Spider):
     start_urls = make_urls_list(url_base)
 
     def parse(self, response):
+        all_people_filename = 'all_people.csv'
         spouses_dict = defaultdict()
         parents_dict = defaultdict()
         offspring_dict = defaultdict()
@@ -90,13 +101,13 @@ class PeopleSpider(scrapy.Spider):
                         print(f"## {label} ##")
                         people_dict, spouse_dict = self.get_spouse_data(tr, people_dict, spouses_dict)
                         all_spouses_dict.update(spouse_dict)
-                    if label == 'parent(s)':
+                    if label in ['parent', 'parent(s)']:
                         print(f"## {label} ##")
                         people_dict, parent_dict = self.get_parents_data(tr, people_dict, parents_dict)
                         all_parents_dict.update(parent_dict)
                     if label == 'children':
                         print(f"## {label} ##")
-                        people_dict, offspr_dict = self.get_children_data(tr, people_dict, offspring_dict)
+                        people_dict, offspr_dict = self.get_offspring_data(tr, people_dict, offspring_dict)
                         all_offspring_dict.update(offspr_dict)
                     # if tr.xpath('th/a/text()').get():
                     #     label2 = tr.xpath('th/a/text()').get()
@@ -110,18 +121,55 @@ class PeopleSpider(scrapy.Spider):
                 #         val = tr.xpath('td/text()').get()
                 #     people_dict[label] = val
         print(people_dict)
-        for k, v in all_spouses_dict.items():
-            print(f"{k} -- {v}")
 
-        for k, v in all_parents_dict.items():
-            print(f"{k} -- {v}")
+        spouse_names = list(all_spouses_dict.values())
+        parents_names = list(all_parents_dict.values())
+        offspring_names = list(all_offspring_dict.values())
 
-        for k, v in all_offspring_dict.items():
-            print(f"{k} -- {v}")
+        with open(all_people_filename, 'w', newline='') as f:
+            csv_writer = csv.writer(f, lineterminator='\n')
+            for val in spouse_names:
+                csv_writer.writerow([val])
+            for val in parents_names:
+                csv_writer.writerow([val])
+            for val in offspring_names:
+                csv_writer.writerow([val])
 
+        # print("\n#### Spouses Dump ####")
+        # for k, v in all_spouses_dict.items():
+        #     print(f"{k} -- {v}")
+        #
+        # print("\n#### Parents Dump ####")
+        # for k, v in all_parents_dict.items():
+        #     print(f"{k} -- {v}")
+        #
+        # print("\n#### Offspring Dump ####")
+        # for k, v in all_offspring_dict.items():
+        #     print(f"{k} -- {v}")
 
-    def get_children_data(self):
-        pass
+    def get_offspring_data(self, my_offspring_data, my_people_dict, my_offspring_dict):
+        offspring_list = []
+        if my_offspring_data.xpath('td//@href').get() not in [None, '']:
+            offspring_href = my_offspring_data.xpath('td//@href')
+            print(f"Found offspring hrefs!")
+            for wiki in offspring_href:
+                offspring_name = wiki.get().split('/')[-1].replace('_', ' ')
+                if not offspring_name.startswith('#'):
+                    offspring_list.append(offspring_name)
+                    wiki_page_name =  wiki.get().split('/')[-1]
+                    my_offspring_dict[offspring_name] = wiki_page_name
+                    # print(f"Offspring name: {offspring_name}")
+                    # print(f"wiki: {wiki_page_name}")
+            my_people_dict['offspring'] = offspring_list
+            # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
+        elif my_offspring_data.xpath('td//text()').get() not in [None, '']:
+            offspring_name = my_offspring_data.xpath('td//text()').get()
+            my_people_dict['offspring'] = offspring_name
+            # print(f"Number of offspring: {offspring_name}")
+        else:
+            my_people_dict['offspring'] += 'unknown'
+            print(f"Offspring cannot be retrieved from {my_offspring_data}")
+        return  my_people_dict, my_offspring_dict
 
     def get_spouse_data(self, my_spouse_data, my_people_dict, my_spouses_dict):
         spouse_list = []
@@ -134,15 +182,16 @@ class PeopleSpider(scrapy.Spider):
                 spouse_name = wiki.get().split('/')[-1].replace('_', ' ')
                 if not spouse_name.startswith('#'):
                     spouse_list.append(spouse_name)
-                    my_spouses_dict[spouse_name] = wiki.get()
-                    print(spouse_name)
-                    print(f"wiki: {wiki.get()}")
+                    wiki_page_name = wiki.get().split('/')[-1]
+                    my_spouses_dict[spouse_name] = wiki_page_name
+                    # print(spouse_name)
+                    # print(f"wiki: {wiki_page_name}")
             my_people_dict['spouses'] = spouse_list
         # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
         elif my_spouse_data.xpath('td//text()').get() not in [None, '']:
             spouse_name = my_spouse_data.xpath('td//text()').get()
             my_people_dict['spouses'] = spouse_name
-            print(spouse_name)
+            # print(spouse_name)
         else:
             my_people_dict['spouse'] += 'unknown'
             print(f"Spouse cannot be retrieved from {my_spouse_data}")
@@ -159,22 +208,25 @@ class PeopleSpider(scrapy.Spider):
                 parent_name = wiki.get().split('/')[-1].replace('_', ' ')
                 if not parent_name.startswith('#'):
                     parents_list.append(parent_name)
-                    my_parents_dict[parent_name] = wiki.get()
-                    print(parent_name)
-                    print(f"wiki: {wiki.get()}")
+                    wiki_page_name = wiki.get().split('/')[-1]
+                    my_parents_dict[parent_name] = wiki_page_name
+                    # print(parent_name)
+                    # print(f"wiki: {wiki_page_name}")
             my_people_dict['parents'] = parents_list
         # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
         elif my_parent_data.xpath('td//text()').get() not in [None, '']:
-            parent_name = get_parents_data.xpath('td//text()').get()
+            parent_name = my_parent_data.xpath('td//text()').get()
             my_people_dict['parents'] = parent_name
-            print(parent_name)
+            # print(parent_name)
         else:
-            my_people_dict['spouse'] += 'unknown'
-            print(f"Spouse cannot be retrieved from {my_parent_data}")
+            my_people_dict['parents'] += 'unknown'
+            print(f"Parents cannot be retrieved from {my_parent_data}")
 
         return my_people_dict, my_parents_dict
 
     def get_education_data(self, tr):
+        schools_list = []
+        degrees_list = []
         # if tr.xpath('td//text()').get() not in [None, '']:
         #     print(tr.xpath('td//text()').get())
         if tr.xpath("td//child::a[position() mod 2 = 1]") not in [None, '']:
@@ -182,8 +234,6 @@ class PeopleSpider(scrapy.Spider):
             my_odd_list = [x.xpath('text()').get() for x in my_odd_tags]
             my_even_tags = tr.xpath('td//child::a[position() mod 2 = 0]')
             my_even_list = [x.xpath('text()').get() for x in my_even_tags]
-            schools_list = []
-            degrees_list = []
             for list_item in [my_odd_list, my_even_list]:
                 for item in list_item:
                     if len(item) > 3:
