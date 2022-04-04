@@ -4,6 +4,7 @@ from scrapy import Selector
 from collections import defaultdict
 import re
 import csv
+from datetime import datetime as dt
 
 MY_URL_BASE = "en.wikipedia.org/wiki/"
 DEFAULT_PROPS = ['born',
@@ -24,21 +25,26 @@ DEGREE_RGX = re.compile(r'"\s(".*>.*</a>.*).*</')
 
 def make_urls_list(my_url_base):
     urls_list = []
+    names_list = []
+
     with open('people.csv', 'r') as file:
         csvFile = csv.reader(file)
         for line in csvFile:
-            print(line)
-            my_url = my_url_base + line[0]
-            print(f"my_url:{my_url}")
-            urls_list.append(my_url)
+            if line[0] not in names_list:
+                names_list.append(line[0])
 
     with open('all_people.csv', 'r') as file:
         csvFile = csv.reader(file)
         for line in csvFile:
-            print(line)
-            my_url = my_url_base + line[0]
-            print(f"my_url:{my_url}")
-            urls_list.append(my_url)
+            if line[0] not in names_list:
+                names_list.append(line[0])
+
+    for name in names_list:
+        my_url = my_url_base + name
+        print(f"my_url:{my_url}")
+        urls_list.append(my_url)
+
+    print(f"############### Length of URLs: {len(urls_list)}")
 
     return urls_list
 
@@ -55,6 +61,10 @@ class PeopleSpider(scrapy.Spider):
 
     global all_offspring_dict
     all_offspring_dict = defaultdict()
+
+    global all_relatives_dict
+    all_relatives_dict = defaultdict()
+
     url_base = 'http://en.wikipedia.org/wiki/'
     start_urls = make_urls_list(url_base)
 
@@ -63,6 +73,7 @@ class PeopleSpider(scrapy.Spider):
         spouses_dict = defaultdict()
         parents_dict = defaultdict()
         offspring_dict = defaultdict()
+        relatives_dict = defaultdict()
         # print(response.xpath('//table[contains(@class,"vcard"]'))
         table_classes = response.css('.vcard').xpath("@class").extract()
         for cls in table_classes:
@@ -88,14 +99,13 @@ class PeopleSpider(scrapy.Spider):
                 if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
                     label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
                     label = label_raw.replace(NBSP, " ")
-                    # print(label)
                     if label in EDUCATION_TYPE:
                         print(f"## {label} ##")
                         schools, degrees = self.get_education_data(tr)
                         people_dict['schools'] += schools
                         people_dict['degrees'] += degrees
-                        print(people_dict['schools'])
-                        print(people_dict['degrees'])
+                        # print(people_dict['schools'])
+                        # print(people_dict['degrees'])
                         # continue
                     if label == 'spouse(s)':
                         print(f"## {label} ##")
@@ -109,6 +119,14 @@ class PeopleSpider(scrapy.Spider):
                         print(f"## {label} ##")
                         people_dict, offspr_dict = self.get_offspring_data(tr, people_dict, offspring_dict)
                         all_offspring_dict.update(offspr_dict)
+                    if label == 'born':
+                        print(f'## {label} ##')
+                        people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
+                        dob = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
+                        people_dict['DOB'] = dob
+                    # if label == 'relatives':
+                    #     people_dict, relative_dict = self.get_relatives_data(tr, people_dict, relatives_dict)
+                    #     all_relatives_dict.update(relative_dict)
                     # if tr.xpath('th/a/text()').get():
                     #     label2 = tr.xpath('th/a/text()').get()
                     #     label += label2
@@ -147,6 +165,10 @@ class PeopleSpider(scrapy.Spider):
         # for k, v in all_offspring_dict.items():
         #     print(f"{k} -- {v}")
 
+    def get_relatives_data(self, my_relatives_data, my_people_dict, my_relative_dict):
+        pass
+        return my_people_dict, my_relative_dict
+
     def get_offspring_data(self, my_offspring_data, my_people_dict, my_offspring_dict):
         offspring_list = []
         if my_offspring_data.xpath('td//@href').get() not in [None, '']:
@@ -173,7 +195,6 @@ class PeopleSpider(scrapy.Spider):
 
     def get_spouse_data(self, my_spouse_data, my_people_dict, my_spouses_dict):
         spouse_list = []
-        # my_spouses_dict = defaultdict()
         # if my_spouse_data.xpath('td/descendant-or-self::*/@href').get() not in [None, '']:
         if my_spouse_data.xpath('td//@href').get() not in [None, '']:
             spouse_href = my_spouse_data.xpath('td//@href')
@@ -200,7 +221,6 @@ class PeopleSpider(scrapy.Spider):
 
     def get_parents_data(self, my_parent_data, my_people_dict, my_parents_dict):
         parents_list = []
-        # my_parents_dict = defaultdict()
         if my_parent_data.xpath('td//@href').get() not in [None, '']:
             parent_href = my_parent_data.xpath('td//@href')
             print(len(parent_href))
@@ -227,8 +247,11 @@ class PeopleSpider(scrapy.Spider):
     def get_education_data(self, tr):
         schools_list = []
         degrees_list = []
-        # if tr.xpath('td//text()').get() not in [None, '']:
-        #     print(tr.xpath('td//text()').get())
+        if tr.xpath('td/text()').get() not in [None, '']:
+            tds = tr.xpath('td/text()').get()
+            for ts in tds:
+                print(f"education element: {ts}")
+
         if tr.xpath("td//child::a[position() mod 2 = 1]") not in [None, '']:
             my_odd_tags = tr.xpath('td//child::a[position() mod 2 = 1]')
             my_odd_list = [x.xpath('text()').get() for x in my_odd_tags]
