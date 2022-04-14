@@ -79,13 +79,12 @@ class PeopleSpider(scrapy.Spider):
         for cls in table_classes:
             match = re.search(VCARD_TABLE_CLASS, cls)
             if match:
-                print("Class = {}".format(match.group(0)))
+                # print("Class = {}".format(match.group(0)))
                 table_cls = match.group(0)
             else:
-                print("No Table Classes match vcard.")
+                print(f"No Table Classes match vcard {cls}")
 
         table_cls_str = "//table[@class='{}']/tbody/tr".format(table_cls)
-        # print(table_cls_str)
         my_infobox_trs = response.xpath(table_cls_str)
 
         people_dict = defaultdict()
@@ -94,6 +93,8 @@ class PeopleSpider(scrapy.Spider):
         people_dict['name'] = my_infobox_trs[0].xpath('th/div[@class="fn"]/text()').get()
 
         print(f"\n========  {people_dict['name']} ========")
+        print(response.xpath("//tr//th/a[@title='Alma mater' or @title='Education']/../following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()"))
+
         for tr in my_infobox_trs:
             if tr.xpath('th'):
                 if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
@@ -101,9 +102,9 @@ class PeopleSpider(scrapy.Spider):
                     label = label_raw.replace(NBSP, " ")
                     if label in EDUCATION_TYPE:
                         print(f"## {label} ##")
-                        schools, degrees = self.get_education_data(tr)
-                        people_dict['schools'] += schools
-                        people_dict['degrees'] += degrees
+                        # schools, degrees = self.get_education_data(tr)
+                        # people_dict['schools'] += schools
+                        # people_dict['degrees'] += degrees
                         # print(people_dict['schools'])
                         # print(people_dict['degrees'])
                         # continue
@@ -247,29 +248,41 @@ class PeopleSpider(scrapy.Spider):
     def get_education_data(self, tr):
         schools_list = []
         degrees_list = []
-        if tr.xpath('td/text()').get() not in [None, '']:
-            tds = tr.xpath('td/text()').get()
-            for ts in tds:
-                print(f"education element: {ts}")
+        # print(tr.xpath("th//a[@title='Alma mater' or @title='Education']/text()"))
+        # schools_list.append(tr.xpath("//th/a[@title='Alma mater' or @title='Education']"))/../following-sibling::"
+                                     # "td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]"
+                                     # "/following-sibling::a[1]/text()"))
 
-        if tr.xpath("td//child::a[position() mod 2 = 1]") not in [None, '']:
-            my_odd_tags = tr.xpath('td//child::a[position() mod 2 = 1]')
-            my_odd_list = [x.xpath('text()').get() for x in my_odd_tags]
-            my_even_tags = tr.xpath('td//child::a[position() mod 2 = 0]')
-            my_even_list = [x.xpath('text()').get() for x in my_even_tags]
-            for list_item in [my_odd_list, my_even_list]:
-                for item in list_item:
-                    if len(item) > 3:
-                        schools_list.append(item)
-                    else:
-                        degrees_list.append(item)
-        elif tr.xpath("tr//li/a"):
-            ed_list = tr.xpath("tr//li/a/text()").get()
-            for item in ed_list:
-                print(item)
-                if len(item) > 3:
-                    schools_list.append(item)
-                else:
-                    degrees_list.append(item)
+        # degrees_list.append(tr.xpath("//th/a[@title='Alma mater' or @title='Education']"))/../following-sibling::"
+                                     # "td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]"
+                                     # "/preceding-sibling::a[1]/text()"))
+
+        # print(degrees_list)
+        # print(schools_list)
+
+        # if tr.xpath('td/text()').get() not in [None, '']:
+        #     tds = tr.xpath('td/text()').get()
+        #     for ts in tds:
+        #         print(f"education element: {ts}")
+        #
+        # if tr.xpath("td//child::a[position() mod 2 = 1]") not in [None, '']:
+        #     my_odd_tags = tr.xpath('td//child::a[position() mod 2 = 1]')
+        #     my_odd_list = [x.xpath('text()').get() for x in my_odd_tags]
+        #     my_even_tags = tr.xpath('td//child::a[position() mod 2 = 0]')
+        #     my_even_list = [x.xpath('text()').get() for x in my_even_tags]
+        #     for list_item in [my_odd_list, my_even_list]:
+        #         for item in list_item:
+        #             if len(item) > 3:
+        #                 schools_list.append(item)
+        #             else:
+        #                 degrees_list.append(item)
+        # elif tr.xpath("tr//li/a"):
+        #     ed_list = tr.xpath("tr//li/a/text()").get()
+        #     for item in ed_list:
+        #         print(item)
+        #         if len(item) > 3:
+        #             schools_list.append(item)
+        #         else:
+        #             degrees_list.append(item)
 
         return schools_list, degrees_list
