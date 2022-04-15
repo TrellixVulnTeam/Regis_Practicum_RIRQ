@@ -93,8 +93,8 @@ class PeopleSpider(scrapy.Spider):
         people_dict['name'] = my_infobox_trs[0].xpath('th/div[@class="fn"]/text()').get()
 
         print(f"\n========  {people_dict['name']} ========")
-        print(response.xpath("//tr//th/a[@title='Alma mater' or @title='Education']/../following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()"))
-
+        # print(response.xpath("//tr//th/a[@title='Alma mater' or @title='Education']/../following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()")).getall()
+        print(response.xpath("//tr//*[contains(text(), 'Education')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()").getall())
         for tr in my_infobox_trs:
             if tr.xpath('th'):
                 if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
