@@ -99,17 +99,25 @@ class PeopleSpider(scrapy.Spider):
 
         for tr in my_infobox_trs:
             if tr.xpath('th'):
+                th = tr.xpath('th')
                 if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
+
+                # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
                     label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
                     label = label_raw.replace(NBSP, " ")
                     if label in EDUCATION_TYPE:
                         print(f"## {label} ##")
                         # schools, degrees = self.get_education_data(tr)
+                        schools, degrees = self.get_education_data(tr)
                         people_dict['schools'] += schools
                         people_dict['degrees'] += degrees
                         # print(people_dict['schools'])
                         # print(people_dict['degrees'])
                         # continue
+                    if label == 'field':
+                        print(f"## {label} ##")
+                    if label == 'doctoral advisor':
+                        print(f"## {label} ##")
                     if label == 'spouse(s)':
                         print(f"## {label} ##")
                         people_dict, spouse_dict = self.get_spouse_data(tr, people_dict, spouses_dict)
@@ -250,29 +258,39 @@ class PeopleSpider(scrapy.Spider):
     def get_education_data(self, tr):
         schools_list = []
         degrees_list = []
-        degrees_list_no_anchor = response.xpath(
-            "//tr//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/preceding-sibling::a[1]/text()").getall()
-        school_list_no_anchor = response.xpath(
-            "//tr//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()").getall()
+        degrees_list_no_anchor = tr.xpath(
+            "//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()").getall()
+        school_list_no_anchor = tr.xpath(
+            "//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (')]/preceding-sibling::a[1]/text()").getall()
 
-        if len(degrees_list_no_anchor) > 0:
-            degrees_list = degrees_list_no_anchor
-        else:
-            print("## Degrees not found ##")
+        degrees_list_anchor = tr.xpath(
+            "//a[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/../following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()").getall()
+        school_list_anchor = tr.xpath(
+            "//a[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/../following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (')]/preceding-sibling::a[1]/text()").getall()
 
-        if len(school_list_no_anchor) > 0:
-            schools_list = school_list_no_anchor
-        else:
-            print("## Schools not found ##")
+        degrees_list_small = tr.xpath(
+            "//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., '(') or starts-with(., ',')]/following-sibling::a[1]/text()").getall()
+        school_list_small = tr.xpath(
+            "//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., '(')]/../preceding-sibling::a[1]/text()").getall()
 
-        # print(tr.xpath("th//a[@title='Alma mater' or @title='Education']/text()"))
-        # schools_list.append(tr.xpath("//th/a[@title='Alma mater' or @title='Education']"))/../following-sibling::"
-                                     # "td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]"
-                                     # "/following-sibling::a[1]/text()"))
+        if degrees_list_no_anchor:
+            degrees_list += degrees_list_no_anchor
+        if degrees_list_anchor:
+            degrees_list += degrees_list_anchor
+        if degrees_list_small:
+            degrees_list += degrees_list_small
 
-        # degrees_list.append(tr.xpath("//th/a[@title='Alma mater' or @title='Education']"))/../following-sibling::"
-                                     # "td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]"
-                                     # "/preceding-sibling::a[1]/text()"))
+        if school_list_no_anchor:
+            schools_list += school_list_no_anchor
+        if school_list_anchor:
+            schools_list += school_list_anchor
+        if school_list_small:
+            schools_list += school_list_small
+
+        for d in degrees_list:
+            if d in schools_list:
+                degrees_list.remove(d)
+
 
         print(degrees_list)
         print(schools_list)
@@ -302,4 +320,4 @@ class PeopleSpider(scrapy.Spider):
         #         else:
         #             degrees_list.append(item)
 
-        return schools_list, degrees_list
+        return schools_list, list(set(degrees_list))
