@@ -273,6 +273,8 @@ class PeopleSpider(scrapy.Spider):
         school_list_small = tr.xpath(
             "//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., '(')]/../preceding-sibling::a[1]/text()").getall()
 
+        # TODO: These lines could be another method. Send two lists of the above lists and append to degrees/schools
+        # TODO cont... lists, then cleanup before returning to this method
         if degrees_list_no_anchor:
             degrees_list += degrees_list_no_anchor
         if degrees_list_anchor:
