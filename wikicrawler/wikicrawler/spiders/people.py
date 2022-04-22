@@ -150,6 +150,7 @@ class PeopleSpider(scrapy.Spider):
                 #         val = tr.xpath('td/text()').get()
                 #     people_dict[label] = val
         print(people_dict)
+        yield people_dict
 
         spouse_names = list(all_spouses_dict.values())
         parents_names = list(all_parents_dict.values())
