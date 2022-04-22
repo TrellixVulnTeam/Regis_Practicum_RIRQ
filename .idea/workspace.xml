@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="">
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds all_people.csv file to supplement poeple.csv file for collecting new people wikis.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,7 +16,7 @@
       <file leaf-file-name="people.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="489">
               <caret line="95" column="139" lean-forward="false" selection-start-line="95" selection-start-column="139" selection-end-line="95" selection-end-column="139" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
