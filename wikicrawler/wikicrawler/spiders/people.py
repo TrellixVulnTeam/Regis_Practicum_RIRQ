@@ -136,6 +136,17 @@ class PeopleSpider(scrapy.Spider):
                         people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
                         dob = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
                         people_dict['DOB'] = dob
+                    if label == 'relatives':
+                        print(f'## {label} ##')
+                        pass
+                    if label == 'occupation':
+                        print(f'## {label} ##')
+                        if tr.xpath('td/a/href//text()').get():
+                            tr.xpath('td/a/href//text()').getall()
+                            people_dict['occupation'] = tr.xpath('td/text()').get()
+                        elif tr.xpath('td/text()').get():
+                            people_dict['occupation'] = tr.xpath('td/text()').get()
+                        # print(tr.xpath('td/text()').get())
 
         # print(people_dict)
         yield people_dict
