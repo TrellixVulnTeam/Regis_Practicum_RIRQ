@@ -9,6 +9,7 @@ from datetime import datetime as dt
 MY_URL_BASE = "en.wikipedia.org/wiki/"
 DEFAULT_PROPS = ['born',
                  'education',
+                 'college',
                  'alma_mater',
                  'spouse',
                  'parents',
@@ -19,7 +20,7 @@ EDUCATION_TYPE = ["education", "college", "alma mater"]
 NBSP = "\xa0"
 
 """Regular Expressions"""
-VCARD_TABLE_CLASS = re.compile(r'infobox.*vcard')
+VCARD_TABLE_CLASS = re.compile(r'.*vcard')
 DEGREE_RGX = re.compile(r'"\s(".*>.*</a>.*).*</')
 
 
@@ -27,24 +28,23 @@ def make_urls_list(my_url_base):
     urls_list = []
     names_list = []
 
+    # with open('people.csv', 'r') as file:
+    #     csvFile = csv.reader(file)
+    #     for line in csvFile:
+    #         if line[0] not in names_list:
+    #             names_list.append(line[0])
+
     with open('people.csv', 'r') as file:
         csvFile = csv.reader(file)
         for line in csvFile:
-            if line[0] not in names_list:
-                names_list.append(line[0])
+            urls_list.append(my_url_base + line[0])
 
-    with open('all_people.csv', 'r') as file:
-        csvFile = csv.reader(file)
-        for line in csvFile:
-            if line[0] not in names_list:
-                names_list.append(line[0])
+    # for name in names_list:
+    #     my_url = my_url_base + name
+    #     print(f"my_url:{my_url}")
+    #     urls_list.append(my_url)
 
-    for name in names_list:
-        my_url = my_url_base + name
-        print(f"my_url:{my_url}")
-        urls_list.append(my_url)
-
-    print(f"############### Length of URLs: {len(urls_list)}")
+    print(f"############### Length of URLs: {len(urls_list)} ###############")
 
     return urls_list
 
@@ -108,9 +108,10 @@ class PeopleSpider(scrapy.Spider):
                     if label in EDUCATION_TYPE:
                         print(f"## {label} ##")
                         # schools, degrees = self.get_education_data(tr)
-                        schools, degrees = self.get_education_data(tr)
-                        people_dict['schools'] += schools
-                        people_dict['degrees'] += degrees
+                        # schools, degrees = self.get_education_data(tr)
+                        people_dict = self.get_education_data(tr, people_dict)
+                        # people_dict['schools'] += schools
+                        # people_dict['degrees'] += degrees
                         # print(people_dict['schools'])
                         # print(people_dict['degrees'])
                         # continue
@@ -135,22 +136,10 @@ class PeopleSpider(scrapy.Spider):
                         people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
                         dob = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
                         people_dict['DOB'] = dob
-                    # if label == 'relatives':
-                    #     people_dict, relative_dict = self.get_relatives_data(tr, people_dict, relatives_dict)
-                    #     all_relatives_dict.update(relative_dict)
-                    # if tr.xpath('th/a/text()').get():
-                    #     label2 = tr.xpath('th/a/text()').get()
-                    #     label += label2
-                # if tr.xpath('td'):
-                #     # print(tr.xpath('td/text()').get())
-                #     if tr.xpath('td/a/text()'):
-                #         val = tr.xpath('td/a/text()').get()
-                #         # print(tr.getAttribute('href'))
-                #     else:
-                #         val = tr.xpath('td/text()').get()
-                #     people_dict[label] = val
-        print(people_dict)
+
+        # print(people_dict)
         yield people_dict
+        # print("____Yielded people_dict____")
 
         spouse_names = list(all_spouses_dict.values())
         parents_names = list(all_parents_dict.values())
@@ -165,21 +154,12 @@ class PeopleSpider(scrapy.Spider):
             for val in offspring_names:
                 csv_writer.writerow([val])
 
-        # print("\n#### Spouses Dump ####")
-        # for k, v in all_spouses_dict.items():
-        #     print(f"{k} -- {v}")
-        #
-        # print("\n#### Parents Dump ####")
-        # for k, v in all_parents_dict.items():
-        #     print(f"{k} -- {v}")
-        #
-        # print("\n#### Offspring Dump ####")
-        # for k, v in all_offspring_dict.items():
-        #     print(f"{k} -- {v}")
+    def get_occupation_data(self, my_people_dict):
+        pass
 
     def get_relatives_data(self, my_relatives_data, my_people_dict, my_relative_dict):
         pass
-        return my_people_dict, my_relative_dict
+        # return my_people_dict, my_relative_dict
 
     def get_offspring_data(self, my_offspring_data, my_people_dict, my_offspring_dict):
         offspring_list = []
@@ -256,7 +236,7 @@ class PeopleSpider(scrapy.Spider):
 
         return my_people_dict, my_parents_dict
 
-    def get_education_data(self, tr):
+    def get_education_data(self, tr, my_people_dict):
         schools_list = []
         degrees_list = []
         degrees_list_no_anchor = tr.xpath(
@@ -294,33 +274,10 @@ class PeopleSpider(scrapy.Spider):
             if d in schools_list:
                 degrees_list.remove(d)
 
+        if not schools_list:
+            schools_list = tr.xpath('td//a/text()').getall()
 
-        print(degrees_list)
-        print(schools_list)
+        my_people_dict['schools'] += schools_list
+        my_people_dict['degrees'] += list(set(degrees_list))
 
-        # if tr.xpath('td/text()').get() not in [None, '']:
-        #     tds = tr.xpath('td/text()').get()
-        #     for ts in tds:
-        #         print(f"education element: {ts}")
-        #
-        # if tr.xpath("td//child::a[position() mod 2 = 1]") not in [None, '']:
-        #     my_odd_tags = tr.xpath('td//child::a[position() mod 2 = 1]')
-        #     my_odd_list = [x.xpath('text()').get() for x in my_odd_tags]
-        #     my_even_tags = tr.xpath('td//child::a[position() mod 2 = 0]')
-        #     my_even_list = [x.xpath('text()').get() for x in my_even_tags]
-        #     for list_item in [my_odd_list, my_even_list]:
-        #         for item in list_item:
-        #             if len(item) > 3:
-        #                 schools_list.append(item)
-        #             else:
-        #                 degrees_list.append(item)
-        # elif tr.xpath("tr//li/a"):
-        #     ed_list = tr.xpath("tr//li/a/text()").get()
-        #     for item in ed_list:
-        #         print(item)
-        #         if len(item) > 3:
-        #             schools_list.append(item)
-        #         else:
-        #             degrees_list.append(item)
-
-        return schools_list, list(set(degrees_list))
+        return my_people_dict
