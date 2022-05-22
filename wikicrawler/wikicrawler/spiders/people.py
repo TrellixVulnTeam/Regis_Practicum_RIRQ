@@ -136,7 +136,11 @@ class PeopleSpider(scrapy.Spider):
                     if label == 'occupation':
                         print(f'## {label} ##')
                         people_dict = self.get_occupation_data(tr, people_dict)
+                    if label == 'citizenship':
+                        print(f'## {label} ##')
+                       # TODO: Grab citizenship data
 
+        #
         # print(people_dict)
         yield people_dict
         # print("____Yielded people_dict____")
