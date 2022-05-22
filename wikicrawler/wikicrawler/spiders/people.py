@@ -107,14 +107,7 @@ class PeopleSpider(scrapy.Spider):
                     label = label_raw.replace(NBSP, " ")
                     if label in EDUCATION_TYPE:
                         print(f"## {label} ##")
-                        # schools, degrees = self.get_education_data(tr)
-                        # schools, degrees = self.get_education_data(tr)
                         people_dict = self.get_education_data(tr, people_dict)
-                        # people_dict['schools'] += schools
-                        # people_dict['degrees'] += degrees
-                        # print(people_dict['schools'])
-                        # print(people_dict['degrees'])
-                        # continue
                     if label == 'field':
                         print(f"## {label} ##")
                     if label == 'doctoral advisor':
