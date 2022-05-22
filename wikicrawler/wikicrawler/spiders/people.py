@@ -140,7 +140,6 @@ class PeopleSpider(scrapy.Spider):
                         print(f'## {label} ##')
                        # TODO: Grab citizenship data
 
-        #
         # print(people_dict)
         yield people_dict
         # print("____Yielded people_dict____")
