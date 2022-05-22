@@ -133,20 +133,16 @@ class PeopleSpider(scrapy.Spider):
                         all_offspring_dict.update(offspr_dict)
                     if label == 'born':
                         print(f'## {label} ##')
-                        people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
-                        dob = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
-                        people_dict['DOB'] = dob
+                        people_dict = self.get_bday(tr, people_dict)
+                        # people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
+                        # dob = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
+                        # people_dict['DOB'] = dob
                     if label == 'relatives':
                         print(f'## {label} ##')
                         pass
                     if label == 'occupation':
                         print(f'## {label} ##')
-                        if tr.xpath('td/a/href//text()').get():
-                            tr.xpath('td/a/href//text()').getall()
-                            people_dict['occupation'] = tr.xpath('td/text()').get()
-                        elif tr.xpath('td/text()').get():
-                            people_dict['occupation'] = tr.xpath('td/text()').get()
-                        # print(tr.xpath('td/text()').get())
+                        people_dict = self.get_occupation_data(tr, people_dict)
 
         # print(people_dict)
         yield people_dict
@@ -165,8 +161,26 @@ class PeopleSpider(scrapy.Spider):
             for val in offspring_names:
                 csv_writer.writerow([val])
 
-    def get_occupation_data(self, my_people_dict):
-        pass
+    def get_bday(self, tr, my_people_dict):
+        if tr.xpath("//div[@class='nickname']/text()").get():
+            my_people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
+
+        if tr.xpath('//span[@class="bday"]/text()').get():
+            my_people_dict['DOB'] = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
+        elif tr.xpath('td/text()').get():
+            my_people_dict['DOB'] = tr.xpath('td/text()').get()
+
+        return my_people_dict
+
+    def get_occupation_data(self, tr, my_people_dict):
+        if tr.xpath('td//a/text()'):
+            occupations = tr.xpath('td//a/text()').getall()
+            my_people_dict['occupation'] = occupations
+        elif tr.xpath('td/text()').get():
+            my_people_dict['occupation'] = tr.xpath('td/text()').get()
+        print(my_people_dict['occupation'])
+
+        return my_people_dict
 
     def get_relatives_data(self, my_relatives_data, my_people_dict, my_relative_dict):
         pass

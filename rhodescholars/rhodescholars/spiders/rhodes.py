@@ -53,5 +53,5 @@ class RhodesSpider(scrapy.Spider):
             # yield {
             #     'name': name,
             #     'occupation': occupation,
-            #     'rhodes_scholar_year': year_awarded,
+            #     'rhodes_scholar': year_awarded,
             # }
