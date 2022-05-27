@@ -139,6 +139,16 @@ class PeopleSpider(scrapy.Spider):
                     if label == 'citizenship':
                         print(f'## {label} ##')
                        # TODO: Grab citizenship data
+                    if label == 'political party':
+                        print(f'## {label} ##')
+                    if label == 'organization':
+                        print(f'## {label} ##')
+                    if label == 'known for':
+                        print(f'## {label} ##')
+                    if label == 'title':
+                        print(f'## {label} ##')
+                    if label == 'board member of':
+                        print(f'## {label} ##')
 
         # print(people_dict)
         yield people_dict
@@ -156,6 +166,24 @@ class PeopleSpider(scrapy.Spider):
                 csv_writer.writerow([val])
             for val in offspring_names:
                 csv_writer.writerow([val])
+
+    def get_board_member_data(self, tr):
+        pass
+
+    def get_political_party(self, tr):
+        pass
+
+    def organization(self, tr):
+        pass
+
+    def get_citizenship(self, tr):
+        pass
+
+    def get_known_for(self, tr):
+        pass
+
+    def get_title(self, tr):
+        pass
 
     def get_bday(self, tr, my_people_dict):
         if tr.xpath("//div[@class='nickname']/text()").get():
