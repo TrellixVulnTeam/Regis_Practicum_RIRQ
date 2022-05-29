@@ -26,13 +26,6 @@ DEGREE_RGX = re.compile(r'"\s(".*>.*</a>.*).*</')
 
 def make_urls_list(my_url_base):
     urls_list = []
-    names_list = []
-
-    # with open('people.csv', 'r') as file:
-    #     csvFile = csv.reader(file)
-    #     for line in csvFile:
-    #         if line[0] not in names_list:
-    #             names_list.append(line[0])
 
     with open('all_people.csv', 'r') as file:
         csvFile = csv.reader(file)
@@ -127,9 +120,9 @@ class PeopleSpider(scrapy.Spider):
                         # people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
                         # dob = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
                         # people_dict['DOB'] = dob
-                    if label == 'relatives':
+                    if label in ['relatives', 'members', 'relations']:
                         print(f'## {label} ##')
-                        pass
+                        people_dict = self.get_relatives_data(tr, people_dict)
                     if label == 'occupation':
                         print(f'## {label} ##')
                         people_dict = self.get_occupation_data(tr, people_dict)
@@ -204,9 +197,13 @@ class PeopleSpider(scrapy.Spider):
 
         return my_people_dict
 
-    def get_relatives_data(self, my_relatives_data, my_people_dict, my_relative_dict):
-        pass
-        # return my_people_dict, my_relative_dict
+    def get_relatives_data(self, tr, my_people_dict):
+        if tr.xpath('td//@href').get() not in [None, '']:
+            relatives = tr.xpath('td//@href').getall()
+            for relative in relatives:
+                my_people_dict['relatives'] += relative
+
+        return my_people_dict
 
     def get_offspring_data(self, my_offspring_data, my_people_dict, my_offspring_dict):
         offspring_list = []

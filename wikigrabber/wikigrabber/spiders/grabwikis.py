@@ -76,10 +76,9 @@ class GrabwikisSpider(scrapy.Spider):
                 if label == 'children':
                     print(f"## {label} ##")
                     wikis = self.get_offspring_data(tr)
-                if label == 'relatives':
+                if label in ['relatives', 'members', 'relations']:
                     print(f'## {label} ##')
                     wikis = self.get_relatives_data(tr)
-                    # reduced_wikis = reduce(list.__add__, wikis)
 
             if wikis:
                 if isinstance(wikis, list):
