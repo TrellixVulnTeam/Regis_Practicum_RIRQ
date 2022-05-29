@@ -34,15 +34,10 @@ def make_urls_list(my_url_base):
     #         if line[0] not in names_list:
     #             names_list.append(line[0])
 
-    with open('people.csv', 'r') as file:
+    with open('all_people.csv', 'r') as file:
         csvFile = csv.reader(file)
         for line in csvFile:
             urls_list.append(my_url_base + line[0])
-
-    # for name in names_list:
-    #     my_url = my_url_base + name
-    #     print(f"my_url:{my_url}")
-    #     urls_list.append(my_url)
 
     print(f"############### Length of URLs: {len(urls_list)} ###############")
 
@@ -81,8 +76,10 @@ class PeopleSpider(scrapy.Spider):
             if match:
                 # print("Class = {}".format(match.group(0)))
                 table_cls = match.group(0)
-            else:
-                print(f"No Table Classes match vcard {cls}")
+            # else:
+            #     print(f"No Table Classes match vcard {cls}")
+        if not table_cls:
+            print(f"No Table Classes match vcard {cls}")
 
         table_cls_str = "//table[@class='{}']/tbody/tr".format(table_cls)
         my_infobox_trs = response.xpath(table_cls_str)
@@ -99,7 +96,7 @@ class PeopleSpider(scrapy.Spider):
 
         for tr in my_infobox_trs:
             if tr.xpath('th'):
-                th = tr.xpath('th')
+                # th = tr.xpath('th')
                 if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
 
                 # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
@@ -138,9 +135,10 @@ class PeopleSpider(scrapy.Spider):
                         people_dict = self.get_occupation_data(tr, people_dict)
                     if label == 'citizenship':
                         print(f'## {label} ##')
-                       # TODO: Grab citizenship data
+                        # TODO: Grab citizenship data
                     if label == 'political party':
                         print(f'## {label} ##')
+                        # TODO: Grab political party dta
                     if label == 'organization':
                         print(f'## {label} ##')
                     if label == 'known for':
@@ -238,7 +236,7 @@ class PeopleSpider(scrapy.Spider):
         spouse_list = []
         # if my_spouse_data.xpath('td/descendant-or-self::*/@href').get() not in [None, '']:
         if my_spouse_data.xpath('td//@href').get() not in [None, '']:
-            spouse_href = my_spouse_data.xpath('td//@href')
+            spouse_href = my_spouse_data.xpath('td//@href').get()
             print(len(spouse_href))
             for wiki in spouse_href:
                 spouse_name = wiki.get().split('/')[-1].replace('_', ' ')
