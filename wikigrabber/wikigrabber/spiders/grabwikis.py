@@ -3,15 +3,33 @@ import sys
 import re
 import csv
 
+from scrapy.crawler import CrawlerProcess
 from functools import reduce
 
 # Global Variable Declarations
 MY_URL_BASE = "en.wikipedia.org/wiki/"
 
 """Regular Expressions"""
-VCARD_TABLE_CLASS = re.compile(r'infobox.*vcard')
+VCARD_TABLE_CLASS = re.compile(r'infobox.*')
 PREFS_LIST = ["Wikipedia", "index.php", "#"]
 NBSP = "\xa0"
+HREFS_LABEL = ['parents',
+               'parent(s)',
+               'spouse(s)',
+               'relatives',
+               'members',
+               'relations',
+               'influences',
+               'influenced',
+               'children',
+               'preceded by',
+               'succeeded by',
+               'connected',
+               'teacher(s)',
+               'mentor(s)',
+               'deputy',
+               'president',
+               'vice president']
 
 
 def make_urls_list(my_url_base):
@@ -25,6 +43,7 @@ def make_urls_list(my_url_base):
 
     with open('people_base.csv', 'r') as file:
         csvFile = csv.reader(file)
+        next(csvFile)
         for line in csvFile:
             urls_list.append(my_url_base + line[0])
 
@@ -40,7 +59,7 @@ class GrabwikisSpider(scrapy.Spider):
     start_urls = make_urls_list(url_base)
 
     def parse(self, response):
-        table_classes = response.css('.vcard').xpath("@class").extract()
+        table_classes = response.css('.infobox').xpath("@class").extract()
         if not table_classes:
             print("#### NO Table Classes ####")
             # sys.exit()
@@ -67,18 +86,18 @@ class GrabwikisSpider(scrapy.Spider):
                 # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
                 label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
                 label = label_raw.replace(NBSP, " ")
-                if label == 'spouse(s)':
-                    print(f"## {label} ##")
-                    wikis = (self.get_spouse_data(tr))
-                if label in ['parent', 'parent(s)']:
-                    print(f"## {label} ##")
-                    wikis = self.get_parents_data(tr)
-                if label == 'children':
-                    print(f"## {label} ##")
-                    wikis = self.get_offspring_data(tr)
-                if label in ['relatives', 'members', 'relations']:
+                # if label == 'spouse(s)':
+                #     print(f"## {label} ##")
+                #     wikis = (self.get_spouse_data(tr))
+                # if label in ['parent', 'parent(s)']:
+                #     print(f"## {label} ##")
+                #     wikis = self.get_parents_data(tr)
+                # if label == 'children':
+                #     print(f"## {label} ##")
+                #     wikis = self.get_offspring_data(tr)
+                if label in HREFS_LABEL:
                     print(f'## {label} ##')
-                    wikis = self.get_relatives_data(tr)
+                    wikis = self.get_hrefs_data(tr)
 
             if wikis:
                 if isinstance(wikis, list):
@@ -91,37 +110,37 @@ class GrabwikisSpider(scrapy.Spider):
                         print(wikis)
                         yield {'wiki': wiki.split('/')[-1]}
 
-    def get_relatives_data(self, tr):
-        if tr.xpath('td//@href').get() not in [None, '']:
-            relatives = tr.xpath('td//@href').getall()
+    def get_hrefs_data(self, tr):
+        if tr.xpath('td//@href') not in [None, '']:
+            hrefs = tr.xpath('td//@href').getall()
             # print(list(relatives))
-            return relatives
+            return hrefs
         else:
             return None
 
-    def get_offspring_data(self, my_offspring_data):
-        if my_offspring_data.xpath('td//@href').get() not in [None, '']:
-            offspring_href = my_offspring_data.xpath('td//@href').getall()
-            print(f"Found offspring hrefs! {offspring_href}")
-            # for offspring in offspring_href:
-            #     print(offspring)
-            return offspring_href
-        else:
-            return None
-
-    def get_spouse_data(self, my_spouse_data):
-        # if my_spouse_data.xpath('td/descendant-or-self::*/@href').get() not in [None, '']:
-        if my_spouse_data.xpath('td//@href').get() not in [None, '']:
-            spouse_href = my_spouse_data.xpath('td//@href').getall()
-            # print(spouse_href)
-            return spouse_href
-        else:
-            return None
-
-    def get_parents_data(self, my_parent_data):
-        if my_parent_data.xpath('td//@href').get() not in [None, '']:
-            parent_href = my_parent_data.xpath('td//@href').getall()
-            # print(parent_href)
-            return parent_href
-        else:
-            return None
+    # def get_offspring_data(self, my_offspring_data):
+    #     if my_offspring_data.xpath('td//@href').get() not in [None, '']:
+    #         offspring_href = my_offspring_data.xpath('td//@href').getall()
+    #         print(f"Found offspring hrefs! {offspring_href}")
+    #         # for offspring in offspring_href:
+    #         #     print(offspring)
+    #         return offspring_href
+    #     else:
+    #         return None
+    #
+    # def get_spouse_data(self, my_spouse_data):
+    #     # if my_spouse_data.xpath('td/descendant-or-self::*/@href').get() not in [None, '']:
+    #     if my_spouse_data.xpath('td//@href').get() not in [None, '']:
+    #         spouse_href = my_spouse_data.xpath('td//@href').getall()
+    #         # print(spouse_href)
+    #         return spouse_href
+    #     else:
+    #         return None
+    #
+    # def get_parents_data(self, my_parent_data):
+    #     if my_parent_data.xpath('td//@href').get() not in [None, '']:
+    #         parent_href = my_parent_data.xpath('td//@href').getall()
+    #         # print(parent_href)
+    #         return parent_href
+    #     else:
+    #         return None
