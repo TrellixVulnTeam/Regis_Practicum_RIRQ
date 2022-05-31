@@ -140,6 +140,8 @@ class PeopleSpider(scrapy.Spider):
                         print(f'## {label} ##')
                     if label == 'board member of':
                         print(f'## {label} ##')
+                    if label == 'labels':
+                        print(f'## {label} ##')
 
         # print(people_dict)
         yield people_dict
@@ -157,6 +159,9 @@ class PeopleSpider(scrapy.Spider):
                 csv_writer.writerow([val])
             for val in offspring_names:
                 csv_writer.writerow([val])
+
+    def get_music_labels(self, tr):
+        pass
 
     def get_board_member_data(self, tr):
         pass

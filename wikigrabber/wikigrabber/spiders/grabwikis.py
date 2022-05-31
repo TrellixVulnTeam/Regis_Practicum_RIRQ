@@ -30,6 +30,13 @@ HREFS_LABEL = ['parents',
                'deputy',
                'president',
                'vice president']
+FAMILY_REGEX = re.compile(r'.*family')
+
+# //div[@class='treeview']//li//@href
+# //*[@id="mw-content-text"]/div[1]/div[5]/pre/text()[8]
+# ∞ 1770 : Gertrude Schnapper (1753–1849)
+# │ └──>
+# //*[@id="mw-content-text"]/div[1]/div[5]/pre/text()[2]
 
 
 def make_urls_list(my_url_base):
@@ -42,14 +49,24 @@ def make_urls_list(my_url_base):
     #             names_list.append(line[0])
 
     with open('people_base.csv', 'r') as file:
-        csvFile = csv.reader(file)
-        next(csvFile)
-        for line in csvFile:
+        csv_reader = csv.reader(file)
+        first_row = next(csv_reader)
+        if first_row != 'wiki':
+            urls_list.append(my_url_base + first_row[0])
+        for line in csv_reader:
             urls_list.append(my_url_base + line[0])
 
     print(f"############### Length of URLs: {len(urls_list)} ###############")
 
     return urls_list
+
+
+def csv_writer(out_file, my_list):
+    with open(out_file, 'w', newline='') as outfile:
+        csv_writer = csv.writer(outfile)
+
+        for row in my_list:
+            csv_writer.writerows(row)
 
 
 class GrabwikisSpider(scrapy.Spider):
@@ -62,7 +79,6 @@ class GrabwikisSpider(scrapy.Spider):
         table_classes = response.css('.infobox').xpath("@class").extract()
         if not table_classes:
             print("#### NO Table Classes ####")
-            # sys.exit()
         for cls in table_classes:
             match = re.search(VCARD_TABLE_CLASS, cls)
             if match:
