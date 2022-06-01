@@ -46,7 +46,7 @@ DEGREE_RGX = re.compile(r'"\s(".*>.*</a>.*).*</')
 def make_urls_list(my_url_base):
     urls_list = []
 
-    with open('people_final.csv', 'r') as file:
+    with open('all_people.csv', 'r') as file:
         csvFile = csv.reader(file)
         for line in csvFile:
             urls_list.append(my_url_base + line[0])
@@ -97,8 +97,8 @@ class PeopleSpider(scrapy.Spider):
         my_infobox_trs = response.xpath(table_cls_str)
 
         people_dict = defaultdict()
-        people_dict['schools'] = []
-        people_dict['degrees'] = []
+        # people_dict['schools'] = []
+        # people_dict['degrees'] = []
         people_dict['name'] = my_infobox_trs[0].xpath('th/div[@class="fn"]/text()').get()
 
         print(f"\n========  {people_dict['name']} ========")
@@ -114,70 +114,74 @@ class PeopleSpider(scrapy.Spider):
                 # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
                     label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
                     label = label_raw.replace(NBSP, " ")
-                    if label in EDUCATION_TYPE:
-                        print(f"## {label} ##")
-                        people_dict = self.get_education_data(tr, people_dict)
-                    if label == 'field':
-                        print(f"## {label} ##")
-                    if label == 'doctoral advisor':
-                        print(f"## {label} ##")
-                    if label == 'spouse(s)':
-                        print(f"## {label} ##")
-                        people_dict, spouse_dict = self.get_spouse_data(tr, people_dict, spouses_dict)
-                        all_spouses_dict.update(spouse_dict)
-                    if label in ['parent', 'parent(s)']:
-                        print(f"## {label} ##")
-                        people_dict, parent_dict = self.get_parents_data(tr, people_dict, parents_dict)
-                        all_parents_dict.update(parent_dict)
-                    if label == 'children':
-                        print(f"## {label} ##")
-                        people_dict, offspr_dict = self.get_offspring_data(tr, people_dict, offspring_dict)
-                        all_offspring_dict.update(offspr_dict)
-                    if label == 'born':
+                    # if label in EDUCATION_TYPE:
+                    #     print(f"## {label} ##")
+                    #     people_dict = self.get_education_data(tr, people_dict)
+                    # if label == 'field':
+                    #     print(f"## {label} ##")
+                    # if label == 'doctoral advisor':
+                    #     print(f"## {label} ##")
+                    # if label == 'spouse(s)':
+                    #     print(f"## {label} ##")
+                    #     people_dict, spouse_dict = self.get_spouse_data(tr, people_dict, spouses_dict)
+                    #     all_spouses_dict.update(spouse_dict)
+                    # if label in ['parent', 'parent(s)']:
+                    #     print(f"## {label} ##")
+                    #     people_dict, parent_dict = self.get_parents_data(tr, people_dict, parents_dict)
+                    #     all_parents_dict.update(parent_dict)
+                    # if label == 'children':
+                    #     print(f"## {label} ##")
+                    #     people_dict, offspr_dict = self.get_offspring_data(tr, people_dict, offspring_dict)
+                    #     all_offspring_dict.update(offspr_dict)
+                    if label in ['born', 'date of birth']:
                         print(f'## {label} ##')
                         people_dict = self.get_bday(tr, people_dict)
                         # people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
                         # dob = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
                         # people_dict['DOB'] = dob
-                    if label in ['relatives', 'members', 'relations']:
+                    if label == 'died':
                         print(f'## {label} ##')
-                        people_dict = self.get_relatives_data(tr, people_dict)
-                    if label == 'occupation':
-                        print(f'## {label} ##')
-                        people_dict = self.get_occupation_data(tr, people_dict)
-                    if label == 'citizenship':
-                        print(f'## {label} ##')
-                        # TODO: Grab citizenship data
-                    if label == 'political party':
-                        print(f'## {label} ##')
-                        # TODO: Grab political party dta
-                    if label == 'organization':
-                        print(f'## {label} ##')
-                    if label == 'known for':
-                        print(f'## {label} ##')
-                    if label == 'title':
-                        print(f'## {label} ##')
-                    if label == 'board member of':
-                        print(f'## {label} ##')
-                    if label == 'labels':
-                        print(f'## {label} ##')
+                        people_dict = self.get_dday(tr, people_dict)
+
+                # if label in ['relatives', 'members', 'relations']:
+                    #     print(f'## {label} ##')
+                    #     people_dict = self.get_relatives_data(tr, people_dict)
+                    # if label == 'occupation':
+                    #     print(f'## {label} ##')
+                    #     people_dict = self.get_occupation_data(tr, people_dict)
+                    # if label == 'citizenship':
+                    #     print(f'## {label} ##')
+                    #     # TODO: Grab citizenship data
+                    # if label == 'political party':
+                    #     print(f'## {label} ##')
+                    #     # TODO: Grab political party dta
+                    # if label == 'organization':
+                    #     print(f'## {label} ##')
+                    # if label == 'known for':
+                    #     print(f'## {label} ##')
+                    # if label == 'title':
+                    #     print(f'## {label} ##')
+                    # if label == 'board member of':
+                    #     print(f'## {label} ##')
+                    # if label == 'labels':
+                    #     print(f'## {label} ##')
 
         # print(people_dict)
         yield people_dict
         # print("____Yielded people_dict____")
 
-        spouse_names = list(all_spouses_dict.values())
-        parents_names = list(all_parents_dict.values())
-        offspring_names = list(all_offspring_dict.values())
-
-        with open(all_people_filename, 'w', newline='') as f:
-            csv_writer = csv.writer(f, lineterminator='\n')
-            for val in spouse_names:
-                csv_writer.writerow([val])
-            for val in parents_names:
-                csv_writer.writerow([val])
-            for val in offspring_names:
-                csv_writer.writerow([val])
+        # spouse_names = list(all_spouses_dict.values())
+        # parents_names = list(all_parents_dict.values())
+        # offspring_names = list(all_offspring_dict.values())
+        #
+        # with open(all_people_filename, 'w', newline='') as f:
+        #     csv_writer = csv.writer(f, lineterminator='\n')
+        #     for val in spouse_names:
+        #         csv_writer.writerow([val])
+        #     for val in parents_names:
+        #         csv_writer.writerow([val])
+        #     for val in offspring_names:
+        #         csv_writer.writerow([val])
 
     def get_music_labels(self, tr):
         pass
@@ -200,14 +204,20 @@ class PeopleSpider(scrapy.Spider):
     def get_title(self, tr):
         pass
 
+    def get_dday(self, tr, my_people_dict):
+        if tr.xpath('td/text()').get():
+            my_people_dict['died'] = tr.xpath('td/text()').get()
+
+            return my_people_dict
+
     def get_bday(self, tr, my_people_dict):
         if tr.xpath("//div[@class='nickname']/text()").get():
             my_people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
 
         if tr.xpath('//span[@class="bday"]/text()').get():
-            my_people_dict['DOB'] = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
+            my_people_dict['born'] = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
         elif tr.xpath('td/text()').get():
-            my_people_dict['DOB'] = tr.xpath('td/text()').get()
+            my_people_dict['born'] = tr.xpath('td/text()').get()
 
         return my_people_dict
 
@@ -224,7 +234,6 @@ class PeopleSpider(scrapy.Spider):
     def get_relatives_data(self, tr, my_people_dict):
         if tr.xpath('td//@href') not in [None, '']:
             td = tr.xpath('td/text()').get()
-            if
             relatives = tr.xpath('td//@href').getall()
             for relative in relatives:
                 my_people_dict['relatives'] += relative
