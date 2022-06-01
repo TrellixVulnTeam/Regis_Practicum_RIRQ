@@ -1,6 +1,8 @@
 import scrapy
 import sys
 import re
+import os
+import csv
 import csv
 
 from scrapy.crawler import CrawlerProcess
@@ -29,7 +31,9 @@ HREFS_LABEL = ['parents',
                'mentor(s)',
                'deputy',
                'president',
-               'vice president']
+               'vice president',
+               'partner(s)',
+               'domestic partner']
 FAMILY_REGEX = re.compile(r'.*family')
 
 # //div[@class='treeview']//li//@href
@@ -59,6 +63,48 @@ def make_urls_list(my_url_base):
     print(f"############### Length of URLs: {len(urls_list)} ###############")
 
     return urls_list
+
+
+def csv_reader(csv_file):
+    final_list = []
+
+    with open(csv_file, 'r') as f:
+        input_list = csv.reader(f)
+
+        for row in input_list:
+            final_list.append(row[0])
+
+    return final_list
+
+
+def add_new_wikis(adding_file, gaining_file, base_file):
+    """
+    Adds newly discovered wiki pages to an accumulative wiki pages file before deleting the previous base file
+    used to extract the new wikis. The previous base file is then deleted and the adding_file is renamed to base_file
+    for the next grabwikis spider run.
+    """
+    adding_list = csv_reader(adding_file)
+    gaining_list = csv_reader(gaining_file)
+    adding_set = set(adding_list)
+    gaining_set = set(gaining_list)
+
+    new_wikis = list(set.difference(adding_set, gaining_set))
+    print(len(new_wikis))
+
+    csv_dict_writer(gaining_file, new_wikis, 'a')
+    csv_dict_writer(base_file, new_wikis, 'w')
+    os.remove(adding_file)
+
+
+def csv_dict_writer(my_file, my_list, my_mode):
+    with open(my_file, my_mode, newline='') as f:
+
+        writer = csv.DictWriter(f, fieldnames=['wiki'])
+
+        for row in my_list:
+
+            if row != 'wiki' or 'Wikipedia:' not in row:
+                writer.writerow({'wiki': row})
 
 
 def csv_writer(out_file, my_list):
@@ -124,7 +170,7 @@ class GrabwikisSpider(scrapy.Spider):
                 elif isinstance(wikis, str):
                     if wikis.startswith('/wiki/'):
                         print(wikis)
-                        yield {'wiki': wiki.split('/')[-1]}
+                        yield {'wiki': wikis.split('/')[-1]}
 
     def get_hrefs_data(self, tr):
         if tr.xpath('td//@href') not in [None, '']:
@@ -133,30 +179,3 @@ class GrabwikisSpider(scrapy.Spider):
             return hrefs
         else:
             return None
-
-    # def get_offspring_data(self, my_offspring_data):
-    #     if my_offspring_data.xpath('td//@href').get() not in [None, '']:
-    #         offspring_href = my_offspring_data.xpath('td//@href').getall()
-    #         print(f"Found offspring hrefs! {offspring_href}")
-    #         # for offspring in offspring_href:
-    #         #     print(offspring)
-    #         return offspring_href
-    #     else:
-    #         return None
-    #
-    # def get_spouse_data(self, my_spouse_data):
-    #     # if my_spouse_data.xpath('td/descendant-or-self::*/@href').get() not in [None, '']:
-    #     if my_spouse_data.xpath('td//@href').get() not in [None, '']:
-    #         spouse_href = my_spouse_data.xpath('td//@href').getall()
-    #         # print(spouse_href)
-    #         return spouse_href
-    #     else:
-    #         return None
-    #
-    # def get_parents_data(self, my_parent_data):
-    #     if my_parent_data.xpath('td//@href').get() not in [None, '']:
-    #         parent_href = my_parent_data.xpath('td//@href').getall()
-    #         # print(parent_href)
-    #         return parent_href
-    #     else:
-    #         return None

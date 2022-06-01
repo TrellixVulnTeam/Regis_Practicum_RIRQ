@@ -7,6 +7,7 @@ import csv
 from datetime import datetime as dt
 
 MY_URL_BASE = "en.wikipedia.org/wiki/"
+EDUCATION_TYPE = ["education", "college", "alma mater"]
 DEFAULT_PROPS = ['born',
                  'education',
                  'college',
@@ -15,7 +16,25 @@ DEFAULT_PROPS = ['born',
                  'parents',
                  'occupation',
                  'relatives']
-EDUCATION_TYPE = ["education", "college", "alma mater"]
+RELATIVES_LABEL = ['parents',
+                   'parent(s)',
+                   'spouse(s)',
+                   'relatives',
+                   'members',
+                   'relations',
+                   'influences',
+                   'influenced',
+                   'children',
+                   'preceded by',
+                   'succeeded by',
+                   'connected',
+                   'teacher(s)',
+                   'mentor(s)',
+                   'deputy',
+                   'president',
+                   'vice president',
+                   'partner(s)',
+                   'domestic partner']
 # NBSP = "&nbsp;"
 NBSP = "\xa0"
 
@@ -27,7 +46,7 @@ DEGREE_RGX = re.compile(r'"\s(".*>.*</a>.*).*</')
 def make_urls_list(my_url_base):
     urls_list = []
 
-    with open('all_people.csv', 'r') as file:
+    with open('people_final.csv', 'r') as file:
         csvFile = csv.reader(file)
         for line in csvFile:
             urls_list.append(my_url_base + line[0])
@@ -203,7 +222,9 @@ class PeopleSpider(scrapy.Spider):
         return my_people_dict
 
     def get_relatives_data(self, tr, my_people_dict):
-        if tr.xpath('td//@href').get() not in [None, '']:
+        if tr.xpath('td//@href') not in [None, '']:
+            td = tr.xpath('td/text()').get()
+            if
             relatives = tr.xpath('td//@href').getall()
             for relative in relatives:
                 my_people_dict['relatives'] += relative
