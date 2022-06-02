@@ -116,62 +116,60 @@ class PeopleSpider(scrapy.Spider):
         people_dict = self.get_header_data(headers, people_dict)
         # labels = response.xpath("//table[@class ='infobox vcard'] // th[@ class ='infobox-label']")
 
-        # for tr in my_infobox_trs:
-        #     if tr.xpath('th'):
-        #         # th = tr.xpath('th')
-        #         if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
-        #
-        #         # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
-        #             label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
-        #             label = label_raw.replace(NBSP, " ")
-                    # if label in EDUCATION_TYPE:
-                    #     print(f"## {label} ##")
-                    #     people_dict = self.get_education_data(tr, people_dict)
-                    # if label == 'field':
-                    #     print(f"## {label} ##")
-                    # if label == 'doctoral advisor':
-                    #     print(f"## {label} ##")
-                    # if label == 'spouse(s)':
-                    #     print(f"## {label} ##")
-                    #     people_dict, spouse_dict = self.get_spouse_data(tr, people_dict, spouses_dict)
-                    #     all_spouses_dict.update(spouse_dict)
-                    # if label in ['parent', 'parent(s)']:
-                    #     print(f"## {label} ##")
-                    #     people_dict, parent_dict = self.get_parents_data(tr, people_dict, parents_dict)
-                    #     all_parents_dict.update(parent_dict)
-                    # if label == 'children':
-                    #     print(f"## {label} ##")
-                    #     people_dict, offspr_dict = self.get_offspring_data(tr, people_dict, offspring_dict)
-                    #     all_offspring_dict.update(offspr_dict)
-                    # if label in ['born', 'date of birth']:
-                    #     print(f'## {label} ##')
-                    #     people_dict = self.get_bday(tr, people_dict)
-                    # if label == 'died':
-                    #     print(f'## {label} ##')
-                    #     people_dict = self.get_dday(tr, people_dict)
-
-                # if label in ['relatives', 'members', 'relations']:
-                    #     print(f'## {label} ##')
-                    #     people_dict = self.get_relatives_data(tr, people_dict)
-                    # if label == 'occupation':
-                    #     print(f'## {label} ##')
-                    #     people_dict = self.get_occupation_data(tr, people_dict)
-                    # if label == 'citizenship':
-                    #     print(f'## {label} ##')
-                    #     # TODO: Grab citizenship data
-                    # if label == 'political party':
-                    #     print(f'## {label} ##')
-                    #     # TODO: Grab political party dta
-                    # if label == 'organization':
-                    #     print(f'## {label} ##')
-                    # if label == 'known for':
-                    #     print(f'## {label} ##')
-                    # if label == 'title':
-                    #     print(f'## {label} ##')
-                    # if label == 'board member of':
-                    #     print(f'## {label} ##')
-                    # if label == 'labels':
-                    #     print(f'## {label} ##')
+        for tr in my_infobox_trs:
+            if tr.xpath('th'):
+                # th = tr.xpath('th')
+                if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
+                # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
+                    label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
+                    label = label_raw.replace(NBSP, " ")
+                    if label in EDUCATION_TYPE:
+                        print(f"## {label} ##")
+                        people_dict = self.get_education_data(tr, people_dict)
+                    if label == 'field':
+                        print(f"## {label} ##")
+                    if label == 'doctoral advisor':
+                        print(f"## {label} ##")
+                    if label == 'spouse(s)':
+                        print(f"## {label} ##")
+                        people_dict, spouse_dict = self.get_spouse_data(tr, people_dict, spouses_dict)
+                        all_spouses_dict.update(spouse_dict)
+                    if label in ['parent', 'parent(s)']:
+                        print(f"## {label} ##")
+                        people_dict, parent_dict = self.get_parents_data(tr, people_dict, parents_dict)
+                        all_parents_dict.update(parent_dict)
+                    if label == 'children':
+                        print(f"## {label} ##")
+                        people_dict, offspr_dict = self.get_offspring_data(tr, people_dict, offspring_dict)
+                        all_offspring_dict.update(offspr_dict)
+                    if label in ['born', 'date of birth']:
+                        print(f'## {label} ##')
+                        people_dict = self.get_bday(tr, people_dict)
+                    if label == 'died':
+                        print(f'## {label} ##')
+                        people_dict = self.get_dday(tr, people_dict)
+                    if label in ['relatives', 'members', 'relations']:
+                        print(f'## {label} ##')
+                        people_dict = self.get_relatives_data(tr, people_dict)
+                    if label == 'occupation':
+                        print(f'## {label} ##')
+                        people_dict = self.get_occupation_data(tr, people_dict)
+                    if label == 'citizenship':
+                        print(f'## {label} ##')
+                        # TODO: Grab citizenship data
+                    if label == 'political party':
+                        print(f'## {label} ##')
+                        # TODO: Grab political party dta
+                    if label == 'organization':
+                        print(f'## {label} ##')
+                    if label == 'known for':
+                        print(f'## {label} ##')
+                    if label == 'title':
+                        print(f'## {label} ##')
+                    if label == 'board member of':
+                        print(f'## {label} ##')
+                    if label == 'labels':
+                        print(f'## {label} ##')
 
         # print(people_dict)
         yield people_dict
