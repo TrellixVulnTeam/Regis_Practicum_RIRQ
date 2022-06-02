@@ -1,4 +1,5 @@
 import scrapy
+import wikipedia
 import pandas as pd
 from scrapy import Selector
 from collections import defaultdict
@@ -100,22 +101,29 @@ class PeopleSpider(scrapy.Spider):
         # people_dict['schools'] = []
         # people_dict['degrees'] = []
         people_dict['name'] = my_infobox_trs[0].xpath('th/div[@class="fn"]/text()').get()
-        people_dict['full_name'] = []
-        people_dict['born'] = []
-        people_dict['died'] = []
+        # people_dict['full_name'] = []
+        # people_dict['born'] = []
+        # people_dict['died'] = []
+        # people_dict['spouses'] = []
+        people_dict['positions'] = []
+
         print(f"\n========  {people_dict['name']} ========")
         # print(response.xpath("//tr//th/a[@title='Alma mater' or @title='Education']/../following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()")).getall()
         # print(response.xpath("//tr//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/preceding-sibling::a[1]/text()").getall())
         # print(response.xpath("//tr//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()").getall())
 
-        for tr in my_infobox_trs:
-            if tr.xpath('th'):
-                # th = tr.xpath('th')
-                if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
+        headers = response.xpath("//table[@class ='infobox vcard'] // th[@ class ='infobox-header']")
+        people_dict = self.get_header_data(headers, people_dict)
+        # labels = response.xpath("//table[@class ='infobox vcard'] // th[@ class ='infobox-label']")
 
-                # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
-                    label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
-                    label = label_raw.replace(NBSP, " ")
+        # for tr in my_infobox_trs:
+        #     if tr.xpath('th'):
+        #         # th = tr.xpath('th')
+        #         if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
+        #
+        #         # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
+        #             label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
+        #             label = label_raw.replace(NBSP, " ")
                     # if label in EDUCATION_TYPE:
                     #     print(f"## {label} ##")
                     #     people_dict = self.get_education_data(tr, people_dict)
@@ -135,15 +143,12 @@ class PeopleSpider(scrapy.Spider):
                     #     print(f"## {label} ##")
                     #     people_dict, offspr_dict = self.get_offspring_data(tr, people_dict, offspring_dict)
                     #     all_offspring_dict.update(offspr_dict)
-                    if label in ['born', 'date of birth']:
-                        print(f'## {label} ##')
-                        people_dict = self.get_bday(tr, people_dict)
-                        # people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
-                        # dob = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
-                        # people_dict['DOB'] = dob
-                    if label == 'died':
-                        print(f'## {label} ##')
-                        people_dict = self.get_dday(tr, people_dict)
+                    # if label in ['born', 'date of birth']:
+                    #     print(f'## {label} ##')
+                    #     people_dict = self.get_bday(tr, people_dict)
+                    # if label == 'died':
+                    #     print(f'## {label} ##')
+                    #     people_dict = self.get_dday(tr, people_dict)
 
                 # if label in ['relatives', 'members', 'relations']:
                     #     print(f'## {label} ##')
@@ -206,6 +211,18 @@ class PeopleSpider(scrapy.Spider):
     def get_title(self, tr):
         pass
 
+    def get_header_data(self, my_headers, positions_dict):
+        my_positions_list = []
+        for header in my_headers:
+            positions = header.xpath('.//text()').getall()
+            position = "".join(positions)
+            if position != "Personal details":
+                my_positions_list.append(position)
+
+        positions_dict['positions'] = my_positions_list
+
+        return positions_dict
+
     def get_dday(self, tr, my_people_dict):
         if tr.xpath('td/text()').get():
             my_people_dict['died'] = tr.xpath('td/text()').get()
@@ -217,7 +234,8 @@ class PeopleSpider(scrapy.Spider):
             my_people_dict['full_name'] = tr.xpath("//div[@class='nickname']/text()").get()
 
         if tr.xpath('//span[@class="bday"]/text()').get():
-            my_people_dict['born'] = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
+            my_people_dict['born'] = tr.xpath('//span[@class="bday"]/text()').get()
+            # my_people_dict['born'] = dt.strptime(tr.xpath('//span[@class="bday"]/text()').get(), '%Y-%m-%d')
         elif tr.xpath('td/text()').get():
             my_people_dict['born'] = tr.xpath('td/text()').get()
 
