@@ -210,4 +210,9 @@ class GrabwikisSpider(scrapy.Spider):
             csv_writer.writeheader()
             for b in bilders_list:
                 csv_writer.writerow({'name': b[0], 'citizenship': b[1], 'position': b[2], 'organization': b[3]})
+    def get_bilderbergers_2019(self, my_people_dict):
+        bilderbergers = response.xpath('//div[@class="text"]/p[2]')
+        bilders = bilderbergers.xpath('./text()').getall()
+        bilders.remove('PARTICIPANTS')
+        positions_orgs = bilderbergers.xpath('./em/text()').getall()
 
