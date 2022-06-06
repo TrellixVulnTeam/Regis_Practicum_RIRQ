@@ -180,39 +180,3 @@ class GrabwikisSpider(scrapy.Spider):
         else:
             return None
 
-    def get_bilderbergers_data(self, my_people_dict):
-        bilders_list = response.xpath('//p[dir="ltr"]')
-        bilders = []
-        positions = []
-        for b in bilders_list:
-            bilders.append(b.xpath('./span[1]/text()').get())
-        for b in bilders_list:
-            positions.append(b.xpath('./span[2]/text()').get())
-        bilderbergers = zip(bilders, positions)
-        for i in bilderbergers:
-            if list(i)[0] != None and list(i)[1] != None:
-                name_country = list(i)[0].split(' (')
-                first_name = name_country[0].split(',')[1]
-                last_name = name_country[0].split(',')[0]
-                name = f"{first_name} {last_name}"
-                country = name_country[1].replace(')', '')
-                country = country.replace(',', '')
-                pos_org = list(i)[1].split(',')
-                position = pos_org[0]
-                if len(pos_org) > 1:
-                    organization = pos_org[1]
-                else:
-                    organization = ''
-                bilders_list.append([name, country, position, organization])
-
-        with open('builders.csv', 'w', newline='') as f:
-            csv_writer = csv.DictWriter(f, fieldnames=['name', 'citizenship', 'position', 'organization'])
-            csv_writer.writeheader()
-            for b in bilders_list:
-                csv_writer.writerow({'name': b[0], 'citizenship': b[1], 'position': b[2], 'organization': b[3]})
-    def get_bilderbergers_2019(self, my_people_dict):
-        bilderbergers = response.xpath('//div[@class="text"]/p[2]')
-        bilders = bilderbergers.xpath('./text()').getall()
-        bilders.remove('PARTICIPANTS')
-        positions_orgs = bilderbergers.xpath('./em/text()').getall()
-
