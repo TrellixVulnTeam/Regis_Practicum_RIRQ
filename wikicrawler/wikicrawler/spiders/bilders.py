@@ -1,9 +1,11 @@
 import scrapy
 import csv
+from collections import defaultdict
 
 
 def gen_urls(my_years):
     my_urls = []
+
     for year in my_years:
         my_urls.append(f'https://bilderbergmeetings.org/meetings/meeting-{year}/participants-{year}')
 
@@ -20,6 +22,9 @@ class BilderSpider(scrapy.Spider):
         # bilders_selector = response.xpath('//div[@class="text"]/p[2]//br/following-sibling::text()')
         bilders_selector = response.xpath('//div[@class="text"]/p[*]//br')
         bilders_list = self.build_bilders_list(bilders_selector)
+        people_dict = self.get_bilderbergers_data(bilders_list)
+
+        yield people_dict
 
     def build_bilders_list(self, my_selector):
         my_list = []
@@ -31,16 +36,11 @@ class BilderSpider(scrapy.Spider):
 
         return my_list
 
-    def get_bilderbergers_data(self, my_peope_dict, bilders_list):
-        bilders = []
-        positions = []
-        for b in bilders_list:
-            bilders.append(b.xpath('./span[1]/text()').get())
-        for b in bilders_list:
-            positions.append(b.xpath('./span[2]/text()').get())
-        bilderbergers = zip(bilders, positions)
+    def get_bilderbergers_data(self, raw_list):
+        bilders_dict = defaultdict()
+        bilders_list = []
 
-        for i in bilderbergers:
+        for i in raw_list:
             if list(i)[0] != None and list(i)[1] != None:
                 name_country = list(i)[0].split(' (')
                 first_name = name_country[0].split(',')[1]
@@ -55,10 +55,15 @@ class BilderSpider(scrapy.Spider):
                 else:
                     organization = ''
                 bilders_list.append([name, country, position, organization])
+                bilders_dict.update({'name': name,
+                                     'citizenship': country,
+                                     'position': position,
+                                     'organization': organization})
 
-        with open('builders.csv', 'w', newline='') as f:
+        with open('builders_native.csv', 'w', newline='') as f:
             csv_writer = csv.DictWriter(f, fieldnames=['name', 'citizenship', 'position', 'organization'])
             csv_writer.writeheader()
             for b in bilders_list:
                 csv_writer.writerow({'name': b[0], 'citizenship': b[1], 'position': b[2], 'organization': b[3]})
 
+        return bilders_dict
