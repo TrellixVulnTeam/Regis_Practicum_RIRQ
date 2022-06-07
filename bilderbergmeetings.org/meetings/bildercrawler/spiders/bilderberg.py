@@ -13,13 +13,13 @@ def gen_urls(my_years):
 
 
 class BilderbergSpider(scrapy.Spider):
-    name = 'bilders'
-    years = ['2019', '2018', '2017', '2016']
-    allowed_domains = ['bilderbergmeetings.org/']
+    name = 'bilderberg'
+    years = ['2018']
+    allowed_domains = ['bilderbergmeetings.org']
+    # start_urls = ['http://bilderbergmeetings.org/']
     start_urls = gen_urls(years)
 
     def parse(self, response):
-        # bilders_selector = response.xpath('//div[@class="text"]/p[2]//br/following-sibling::text()')
         bilders_selector = response.xpath('//div[@class="text"]/p[*]//br')
         bilders_list = self.build_bilders_list(bilders_selector)
         people_dict = self.get_bilderbergers_data(bilders_list)
@@ -29,9 +29,11 @@ class BilderbergSpider(scrapy.Spider):
     def build_bilders_list(self, my_selector):
         my_list = []
 
-        for name in my_selector:
-            name = name.xpath('following-sibling::text()').get()
-            pos_org = name.xpath('following-sibling::*[1]/text()').get()
+        for selector in my_selector:
+            name = selector.xpath('following-sibling::text()').get()
+            pos_org = selector.xpath('following-sibling::*[1]/text()').get()
+            print(name)
+            print(pos_org)
             my_list.append([name.strip(), pos_org])
 
         return my_list
@@ -60,10 +62,11 @@ class BilderbergSpider(scrapy.Spider):
                                      'position': position,
                                      'organization': organization})
 
-        with open('builders_native.csv', 'w', newline='') as f:
+        with open('builders_2018.csv', 'w', newline='') as f:
             csv_writer = csv.DictWriter(f, fieldnames=['name', 'citizenship', 'position', 'organization'])
             csv_writer.writeheader()
             for b in bilders_list:
                 csv_writer.writerow({'name': b[0], 'citizenship': b[1], 'position': b[2], 'organization': b[3]})
 
         return bilders_dict
+
