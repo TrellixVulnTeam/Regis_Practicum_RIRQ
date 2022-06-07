@@ -1,7 +1,7 @@
 import scrapy
-import wikipedia
-import pandas as pd
-from scrapy import Selector
+# import wikipedia
+# import pandas as pd
+# from scrapy import Selector
 from collections import defaultdict
 import re
 import csv
@@ -16,6 +16,7 @@ DEFAULT_PROPS = ['born',
                  'spouse',
                  'parents',
                  'occupation',
+                 'profession',
                  'relatives']
 RELATIVES_LABEL = ['parents',
                    'parent(s)',
