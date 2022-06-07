@@ -1,18 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds crawler project and new csv files.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/middlewares.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/pipelines.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/bilderberg.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/scrapy.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/scrapy.cfg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/bilders.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/bilders.py" afterDir="false" />
-    </list>
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Refactors code." />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,23 +10,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
+            <state relative-caret-position="85">
               <caret line="8" selection-start-line="8" selection-end-line="8" />
-              <folding>
-                <element signature="e#0#13#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="29">
-              <caret line="40" column="28" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -243,8 +220,31 @@
       <option name="project" value="LOCAL" />
       <updated>1654575184416</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Refactors code.">
+      <created>1654575560979</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1654575560979</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Refactors code.">
+      <created>1654575624815</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1654575624815</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
   </component>
   <component name="ToolWindowManager">
     <frame x="34" y="18" width="1388" height="790" extended-state="0" />
@@ -282,7 +282,8 @@
     <MESSAGE value="Adds another spider for scraping bilders." />
     <MESSAGE value="Updates bilders spider for all previous years configuration." />
     <MESSAGE value="Adds crawler project and new csv files." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds crawler project and new csv files." />
+    <MESSAGE value="Refactors code." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactors code." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
@@ -308,20 +309,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
+    <entry file="file://$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        <state relative-caret-position="29">
+          <caret line="40" column="28" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py">
+    <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="29">
-          <caret line="40" column="28" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
+        <state relative-caret-position="85">
+          <caret line="8" selection-start-line="8" selection-end-line="8" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
