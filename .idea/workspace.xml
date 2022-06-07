@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds file." />
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds profession to default properties list.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -13,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="8" selection-start-line="8" selection-end-line="8" />
+            <state relative-caret-position="306">
+              <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -51,15 +53,15 @@
         <option value="$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py" />
         <option value="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/bilders.py" />
         <option value="$PROJECT_DIR$/bilderberg.py" />
-        <option value="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" />
         <option value="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/bilderberg.py" />
         <option value="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py" />
+        <option value="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="85" />
-    <option name="y" value="45" />
+    <option name="x" value="72" />
+    <option name="y" value="65" />
     <option name="width" value="3470" />
     <option name="height" value="1975" />
   </component>
@@ -71,7 +73,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -109,6 +110,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -241,7 +243,28 @@
       <option name="project" value="LOCAL" />
       <updated>1654575955178</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Adds file.">
+      <created>1654576324208</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1654576324208</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Adds file.">
+      <created>1654576354462</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1654576354462</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Adds profession to default properties list.">
+      <created>1654576876513</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1654576876513</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TodoView">
@@ -254,10 +277,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="34" y="18" width="1388" height="790" extended-state="0" />
-    <editor active="true" />
+    <frame x="30" y="32" width="1388" height="790" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14285715" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14511278" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -292,7 +314,8 @@
     <MESSAGE value="Adds crawler project and new csv files." />
     <MESSAGE value="Refactors code." />
     <MESSAGE value="Adds file." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds file." />
+    <MESSAGE value="Adds profession to default properties list." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds profession to default properties list." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
@@ -330,8 +353,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="8" selection-start-line="8" selection-end-line="8" />
+        <state relative-caret-position="306">
+          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
