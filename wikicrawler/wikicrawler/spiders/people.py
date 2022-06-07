@@ -16,6 +16,7 @@ DEFAULT_PROPS = ['born',
                  'spouse',
                  'parents',
                  'occupation',
+                 'profession',
                  'relatives']
 RELATIVES_LABEL = ['parents',
                    'parent(s)',
