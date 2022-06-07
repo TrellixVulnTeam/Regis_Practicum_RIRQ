@@ -7,7 +7,7 @@ def gen_urls(my_years):
     my_urls = []
 
     for year in my_years:
-        my_urls.append(f'https://bilderbergmeetings.org/meetings/meeting-{year}/participants-{year}')
+        my_urls.append(f'https://bildercrawler/meetings/meeting-{year}/participants-{year}')
 
     return my_urls
 
@@ -15,7 +15,7 @@ def gen_urls(my_years):
 class BilderbergSpider(scrapy.Spider):
     name = 'bilders'
     years = ['2019', '2018', '2017', '2016']
-    allowed_domains = ['bilderbergmeetings.org/']
+    allowed_domains = ['bildercrawler/']
     start_urls = gen_urls(years)
 
     def parse(self, response):

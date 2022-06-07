@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Updates bilders spider for all previous years configuration.">
-      <change afterPath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/items.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/middlewares.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/pipelines.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/settings.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/bilderberg.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/scrapy.cfg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikicrawler/builders_2016.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikicrawler/builders_2017.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikicrawler/builders_2018.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikicrawler/builders_2019.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikicrawler/builders_2022.csv" afterDir="false" />
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds crawler project and new csv files.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikicrawler/builders.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/items.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/middlewares.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/pipelines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/bilderberg.py" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bilderbergmeetings.org/meetings/scrapy.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/bildercrawler/bildercrawler/scrapy.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/bilders.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/bilders.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -31,7 +24,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
+            <state relative-caret-position="17">
               <caret line="8" selection-start-line="8" selection-end-line="8" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
@@ -41,7 +34,7 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/bilderberg.py">
+        <entry file="file://$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="29">
               <caret line="40" column="28" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
@@ -83,6 +76,7 @@
         <option value="$PROJECT_DIR$/bilderberg.py" />
         <option value="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" />
         <option value="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/bilderberg.py" />
+        <option value="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py" />
       </list>
     </option>
   </component>
@@ -100,7 +94,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -111,26 +104,26 @@
             <path>
               <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="bilderbergmeetings.org" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="bilderbergmeetings.org" type="462c0819:PsiDirectoryNode" />
-              <item name="meetings" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="bilderbergmeetings.org" type="462c0819:PsiDirectoryNode" />
-              <item name="meetings" type="462c0819:PsiDirectoryNode" />
               <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="bilderbergmeetings.org" type="462c0819:PsiDirectoryNode" />
-              <item name="meetings" type="462c0819:PsiDirectoryNode" />
+              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
+              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
+              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
+              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
+              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
               <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
               <item name="spiders" type="462c0819:PsiDirectoryNode" />
             </path>
@@ -138,6 +131,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -242,22 +236,29 @@
       <option name="project" value="LOCAL" />
       <updated>1654488650678</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Adds crawler project and new csv files.">
+      <created>1654575184416</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1654575184416</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="34" y="18" width="1388" height="790" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13834587" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1406015" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3287879" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.3287879" />
       <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49798504" visible="true" weight="0.21363637" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32902467" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.502015" side_tool="true" weight="0.32902467" />
@@ -280,7 +281,8 @@
     <MESSAGE value="Adds code for 2019 participants." />
     <MESSAGE value="Adds another spider for scraping bilders." />
     <MESSAGE value="Updates bilders spider for all previous years configuration." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updates bilders spider for all previous years configuration." />
+    <MESSAGE value="Adds crawler project and new csv files." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds crawler project and new csv files." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
@@ -295,16 +297,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bilderberg.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="11" column="18" lean-forward="true" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/bilderberg.py" />
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/bilders.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="63">
@@ -317,7 +310,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
+        <state relative-caret-position="17">
           <caret line="8" selection-start-line="8" selection-end-line="8" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
@@ -325,7 +318,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/bilderberg.py">
+    <entry file="file://$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="29">
           <caret line="40" column="28" selection-start-line="40" selection-start-column="28" selection-end-line="40" selection-end-column="28" />
