@@ -168,13 +168,15 @@ class GrabwikisSpider(scrapy.Spider):
                     for wiki in wikis:
                         if wiki.startswith('/wiki/'):
                             wiki_decoded = urllib.parse.unquote(wiki)
-                            print(wiki_decoded)
-                            yield {'wiki': wiki_decoded.split('/')[-1]}
+                            print(wiki_decoded.split('/')[-1])
+                            # print(wiki)
+                            yield {'wiki': wiki.split('/')[-1]}
                 elif isinstance(wikis, str):
                     if wikis.startswith('/wiki/'):
                         wiki_decoded = urllib.parse.unquote(wiki)
-                        print(wiki_decoded)
-                        yield {'wiki': wiki_decoded.split('/')[-1]}
+                        print(wiki_decoded.split('/')[-1])
+                        # print(wiki)
+                        yield {'wiki': wiki.split('/')[-1]}
 
     def get_hrefs_data(self, tr):
         if tr.xpath('td//@href') not in [None, '']:
