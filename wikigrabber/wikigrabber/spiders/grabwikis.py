@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 import scrapy
+import urllib
 import sys
 import re
 import os
@@ -16,6 +19,8 @@ VCARD_TABLE_CLASS = re.compile(r'infobox.*')
 PREFS_LIST = ["Wikipedia", "index.php", "#"]
 NBSP = "\xa0"
 HREFS_LABEL = ['parents',
+               'father',
+               'mother',
                'parent(s)',
                'spouse(s)',
                'relatives',
@@ -33,7 +38,10 @@ HREFS_LABEL = ['parents',
                'president',
                'vice president',
                'partner(s)',
-               'domestic partner']
+               'domestic partner',
+               'predecessor',
+               'doctoral advisor',
+               'doctoral students']
 FAMILY_REGEX = re.compile(r'.*family')
 
 # //div[@class='treeview']//li//@href
@@ -175,6 +183,8 @@ class GrabwikisSpider(scrapy.Spider):
     def get_hrefs_data(self, tr):
         if tr.xpath('td//@href') not in [None, '']:
             hrefs = tr.xpath('td//@href').getall()
+            # hrefs_encoded = tr.xpath('td//@href').getall()
+            # hrefs = [urllib.parse.unquote(x, encoding='utf-8', errors='replace') for x in hrefs_encoded]
             # print(list(relatives))
             return hrefs
         else:

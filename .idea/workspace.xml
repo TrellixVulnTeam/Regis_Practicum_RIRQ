@@ -2,7 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds profession to default properties list.">
+      <change afterPath="$PROJECT_DIR$/wikicrawler/builders_.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/people_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/people_notebook.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikicrawler/all_people.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/all_people.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikicrawler/builders.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikicrawler/builders_2016.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikigrabber/all_people.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikigrabber/all_people.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikigrabber/people_base.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikigrabber/people_base.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +25,20 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="306">
-              <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+            <state relative-caret-position="-884">
+              <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
+              <folding>
+                <element signature="e#0#13#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2844">
+              <caret column="23" selection-start-column="23" selection-end-column="23" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -50,11 +72,11 @@
       <list>
         <option value="$PROJECT_DIR$/rhodes.py" />
         <option value="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/rhodes.py" />
-        <option value="$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py" />
         <option value="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/bilders.py" />
         <option value="$PROJECT_DIR$/bilderberg.py" />
         <option value="$PROJECT_DIR$/bilderbergmeetings.org/meetings/bildercrawler/spiders/bilderberg.py" />
         <option value="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py" />
+        <option value="$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py" />
         <option value="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" />
       </list>
     </option>
@@ -83,27 +105,19 @@
             <path>
               <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
+              <item name="wikigrabber" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
-              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
+              <item name="wikigrabber" type="462c0819:PsiDirectoryNode" />
+              <item name="wikigrabber" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
-              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
-              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
-              <item name="final_project" type="462c0819:PsiDirectoryNode" />
-              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
-              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
-              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
+              <item name="wikigrabber" type="462c0819:PsiDirectoryNode" />
+              <item name="wikigrabber" type="462c0819:PsiDirectoryNode" />
               <item name="spiders" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -277,7 +291,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="30" y="32" width="1388" height="790" extended-state="0" />
+    <frame x="29" y="26" width="1388" height="790" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14511278" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -320,16 +334,6 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/rhodes.py" />
-    <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2958">
-          <caret line="182" selection-start-line="182" selection-end-line="182" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/bilderberg.py" />
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/bilders.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -351,10 +355,20 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2844">
+          <caret column="23" selection-start-column="23" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="30" selection-start-line="18" selection-start-column="30" selection-end-line="18" selection-end-column="30" />
+        <state relative-caret-position="-884">
+          <caret line="23" column="28" selection-start-line="23" selection-start-column="28" selection-end-line="23" selection-end-column="28" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>

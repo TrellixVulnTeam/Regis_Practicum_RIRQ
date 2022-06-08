@@ -1,5 +1,5 @@
 import scrapy
-# import wikipedia
+import urllib
 # import pandas as pd
 # from scrapy import Selector
 from collections import defaultdict
@@ -20,6 +20,8 @@ DEFAULT_PROPS = ['born',
                  'relatives']
 RELATIVES_LABEL = ['parents',
                    'parent(s)',
+                   'mother',
+                   'father',
                    'spouse(s)',
                    'relatives',
                    'members',
@@ -99,13 +101,18 @@ class PeopleSpider(scrapy.Spider):
         my_infobox_trs = response.xpath(table_cls_str)
 
         people_dict = defaultdict()
-        # people_dict['schools'] = []
-        # people_dict['degrees'] = []
+        people_dict['schools'] = []
+        people_dict['degrees'] = []
         people_dict['name'] = my_infobox_trs[0].xpath('th/div[@class="fn"]/text()').get()
-        # people_dict['full_name'] = []
-        # people_dict['born'] = []
-        # people_dict['died'] = []
-        # people_dict['spouses'] = []
+        people_dict['full_name'] = []
+        people_dict['born'] = []
+        people_dict['died'] = []
+        people_dict['spouses'] = []
+        people_dict['parents'] = []
+        people_dict['sibling'] = []
+        people_dict['offspring'] = []
+        people_dict['second_cousin'] = []
+        people_dict['cousin'] = []
         people_dict['positions'] = []
 
         print(f"\n========  {people_dict['name']} ========")
