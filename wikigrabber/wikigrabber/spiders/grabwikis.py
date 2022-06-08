@@ -54,13 +54,7 @@ FAMILY_REGEX = re.compile(r'.*family')
 def make_urls_list(my_url_base):
     urls_list = []
 
-    # with open('people.csv', 'r') as file:
-    #     csvFile = csv.reader(file)
-    #     for line in csvFile:
-    #         if line[0] not in names_list:
-    #             names_list.append(line[0])
-
-    with open('people_base.csv', 'r') as file:
+    with open('people_base.csv', 'r', encoding='unicode_escape') as file:
         csv_reader = csv.reader(file)
         first_row = next(csv_reader)
         if first_row != 'wiki':
@@ -76,7 +70,7 @@ def make_urls_list(my_url_base):
 def csv_reader(csv_file):
     final_list = []
 
-    with open(csv_file, 'r') as f:
+    with open(csv_file, 'r', encoding='unicode_escape') as f:
         input_list = csv.reader(f)
 
         for row in input_list:
@@ -173,12 +167,14 @@ class GrabwikisSpider(scrapy.Spider):
                 if isinstance(wikis, list):
                     for wiki in wikis:
                         if wiki.startswith('/wiki/'):
-                            print(wiki)
-                            yield {'wiki': wiki.split('/')[-1]}
+                            wiki_decoded = urllib.parse.unquote(wiki)
+                            print(wiki_decoded)
+                            yield {'wiki': wiki_decoded.split('/')[-1]}
                 elif isinstance(wikis, str):
                     if wikis.startswith('/wiki/'):
-                        print(wikis)
-                        yield {'wiki': wikis.split('/')[-1]}
+                        wiki_decoded = urllib.parse.unquote(wiki)
+                        print(wiki_decoded)
+                        yield {'wiki': wiki_decoded.split('/')[-1]}
 
     def get_hrefs_data(self, tr):
         if tr.xpath('td//@href') not in [None, '']:
