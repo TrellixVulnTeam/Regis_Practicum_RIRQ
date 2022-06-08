@@ -16,7 +16,7 @@ MY_URL_BASE = "en.wikipedia.org/wiki/"
 
 """Regular Expressions"""
 VCARD_TABLE_CLASS = re.compile(r'infobox.*')
-PREFS_LIST = ["Wikipedia", "index.php", "#"]
+PREFS_LIST = ["Wikipedia", "#", 'index']
 NBSP = "\xa0"
 HREFS_LABEL = ['parents',
                'father',
@@ -114,7 +114,7 @@ def csv_writer(out_file, my_list):
         csv_writer = csv.writer(outfile)
 
         for row in my_list:
-            csv_writer.writerows(row)
+            csv_writer.writerow([row])
 
 
 class GrabwikisSpider(scrapy.Spider):
@@ -187,4 +187,3 @@ class GrabwikisSpider(scrapy.Spider):
             return hrefs
         else:
             return None
-

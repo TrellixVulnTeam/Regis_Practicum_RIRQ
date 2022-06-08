@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Tightens up the notebook to exclude non-ascii characters.">
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="URL cleanup cont..,">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/people_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/people_notebook.ipynb" afterDir="false" />
@@ -32,8 +32,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="58">
-              <caret line="56" column="62" selection-start-line="56" selection-start-column="62" selection-end-line="56" selection-end-column="62" />
+            <state relative-caret-position="777">
+              <caret line="189" selection-start-line="189" selection-end-line="189" />
             </state>
           </provider>
         </entry>
@@ -53,6 +53,7 @@
       <find>spouse_name</find>
       <find>csv_reader</find>
       <find>add_new_wikis</find>
+      <find>PREFS_LIST</find>
     </findStrings>
     <replaceStrings>
       <replace>EDUCATION_TYPE</replace>
@@ -279,7 +280,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654675802089</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Still working on cleaning up the URL encoding issue while writing to CSV file.">
+      <created>1654709824528</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1654709824528</updated>
+    </task>
+    <task id="LOCAL-00020" summary="URL cleanup cont..,">
+      <created>1654710011844</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1654710011844</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TodoView">
@@ -295,7 +310,7 @@
     <frame x="28" y="26" width="1388" height="790" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14736842" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14736842" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -305,7 +320,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3287879" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49798504" visible="true" weight="0.21363637" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49798504" visible="true" weight="0.21363637" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32902467" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.502015" side_tool="true" weight="0.32902467" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32902467" />
@@ -332,7 +347,9 @@
     <MESSAGE value="Adds file." />
     <MESSAGE value="Adds profession to default properties list." />
     <MESSAGE value="Tightens up the notebook to exclude non-ascii characters." />
-    <option name="LAST_COMMIT_MESSAGE" value="Tightens up the notebook to exclude non-ascii characters." />
+    <MESSAGE value="Still working on cleaning up the URL encoding issue while writing to CSV file." />
+    <MESSAGE value="URL cleanup cont..," />
+    <option name="LAST_COMMIT_MESSAGE" value="URL cleanup cont..," />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
@@ -370,8 +387,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="58">
-          <caret line="56" column="62" selection-start-line="56" selection-start-column="62" selection-end-line="56" selection-end-column="62" />
+        <state relative-caret-position="777">
+          <caret line="189" selection-start-line="189" selection-end-line="189" />
         </state>
       </provider>
     </entry>
