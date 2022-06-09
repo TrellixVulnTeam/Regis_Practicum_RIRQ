@@ -150,15 +150,6 @@ class GrabwikisSpider(scrapy.Spider):
                 # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
                 label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
                 label = label_raw.replace(NBSP, " ")
-                # if label == 'spouse(s)':
-                #     print(f"## {label} ##")
-                #     wikis = (self.get_spouse_data(tr))
-                # if label in ['parent', 'parent(s)']:
-                #     print(f"## {label} ##")
-                #     wikis = self.get_parents_data(tr)
-                # if label == 'children':
-                #     print(f"## {label} ##")
-                #     wikis = self.get_offspring_data(tr)
                 if label in HREFS_LABEL:
                     print(f'## {label} ##')
                     wikis = self.get_hrefs_data(tr)
