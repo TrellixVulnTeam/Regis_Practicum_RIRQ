@@ -1,11 +1,16 @@
 import scrapy
 import urllib
-# import pandas as pd
-# from scrapy import Selector
-from collections import defaultdict
 import re
 import csv
+# import pandas as pd
+
+from collections import defaultdict
+# from scrapy import Selector
 from datetime import datetime as dt
+
+############## Neo4j References ##############
+# https://neo4j.com/developer/desktop-csv-import/
+# https://discourse.neo4j.com/t/how-to-format-lists-in-the-node-property-when-using-the-neo4j-admin-import-tool/35766
 
 MY_URL_BASE = "en.wikipedia.org/wiki/"
 EDUCATION_TYPE = ["education", "college", "alma mater"]
@@ -102,35 +107,38 @@ class PeopleSpider(scrapy.Spider):
         my_infobox_trs = response.xpath(table_cls_str)
 
         people_dict = defaultdict()
-        people_dict['schools'] = []
-        people_dict['degrees'] = []
-        people_dict['name'] = my_infobox_trs[0].xpath('th/div[@class="fn"]/text()').get()
+
+        raw_name = my_infobox_trs[0].xpath('th/div[@class="fn"]/text()').get()
+        name = urllib.parse.unquote(raw_name)
+        people_dict['name'] = name
         people_dict['full_name'] = []
         people_dict['born'] = []
         people_dict['died'] = []
+        people_dict['known_for'] = []
+        people_dict['schools'] = []
+        people_dict['degrees'] = []
         people_dict['spouses'] = []
-        people_dict['parents'] = []
-        people_dict['siblings'] = []
         people_dict['offspring'] = []
-        people_dict['second_cousin'] = []
-        people_dict['cousin'] = []
-        people_dict['second_cousin'] = []
+        people_dict['parents'] = []
+        people_dict['relatives'] = []
+        # people_dict['siblings'] = []
+        # people_dict['cousin'] = []
+        # people_dict['second_cousin'] = []
+        people_dict['title'] = []
+        people_dict['positions'] = []
         people_dict['occupation'] = []
         people_dict['employer'] = []
-        people_dict['positions'] = []
         people_dict['political_party'] = []
-        people_dict['known_for'] = []
         people_dict['board_member_of'] = []
-        people_dict['known_for'] = []
         people_dict['labels'] = []
-        people_dict['title'] = []
 
         print(f"\n========  {people_dict['name']} ========")
         # print(response.xpath("//tr//th/a[@title='Alma mater' or @title='Education']/../following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()")).getall()
         # print(response.xpath("//tr//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/preceding-sibling::a[1]/text()").getall())
         # print(response.xpath("//tr//*[starts-with(text(), 'Education') or starts-with(text(), 'Alma mater')]/following-sibling::td[@class='infobox-data']//text()[starts-with(., ' (') or starts-with(., ',')]/following-sibling::a[1]/text()").getall())
 
-        headers = response.xpath("//table[@class='infobox vcard']//th[@class='infobox-header']")
+        # headers = response.xpath("//table[@class='infobox vcard']//th[@class='infobox-header']")
+        headers = response.css('.vcard').xpath("//th[@class='infobox-header']")
         people_dict = self.get_header_data(headers, people_dict)
         # labels = response.xpath("//table[@class ='infobox vcard'] // th[@ class ='infobox-label']")
 
@@ -148,7 +156,7 @@ class PeopleSpider(scrapy.Spider):
                         print(f"## {label} ##")
                     if label == 'doctoral advisor':
                         print(f"## {label} ##")
-                    if label == 'spouse(s)':
+                    if label in ['spouse(s)', 'partner', 'domestic partner']:
                         print(f"## {label} ##")
                         people_dict, spouse_dict = self.get_spouse_data(tr, people_dict, spouses_dict)
                         all_spouses_dict.update(spouse_dict)
@@ -280,10 +288,11 @@ class PeopleSpider(scrapy.Spider):
 
     def get_relatives_data(self, tr, my_people_dict):
         if tr.xpath('td//@href') not in [None, '']:
-            td = tr.xpath('td/text()').get()
-            relatives = tr.xpath('td//@href').getall()
-            for relative in relatives:
-                my_people_dict['relatives'] += relative
+            relatives = tr.xpath('td//a/text()').getall()
+        else:
+            relatives = tr.xpath('td//text()').getall()
+
+        my_people_dict['relatives'] = relatives
 
         return my_people_dict
 
@@ -303,13 +312,13 @@ class PeopleSpider(scrapy.Spider):
             my_people_dict['offspring'] = offspring_list
             # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
         elif my_offspring_data.xpath('td//text()').get() not in [None, '']:
-            offspring_name = my_offspring_data.xpath('td//text()').get()
+            offspring_name = my_offspring_data.xpath('td//text()').getall()
             my_people_dict['offspring'] = offspring_name
             # print(f"Number of offspring: {offspring_name}")
         else:
             my_people_dict['offspring'] += 'unknown'
             # print(f"Offspring cannot be retrieved from {my_offspring_data}")
-        return  my_people_dict, my_offspring_dict
+        return my_people_dict, my_offspring_dict
 
     def get_spouse_data(self, my_spouse_data, my_people_dict, my_spouses_dict):
         spouse_list = []
@@ -353,7 +362,7 @@ class PeopleSpider(scrapy.Spider):
             my_people_dict['parents'] = parents_list
         # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
         elif my_parent_data.xpath('td//text()').get() not in [None, '']:
-            parent_name = my_parent_data.xpath('td//text()').get()
+            parent_name = my_parent_data.xpath('td//text()').getall()
             my_people_dict['parents'] += parent_name
             # print(parent_name)
         else:
