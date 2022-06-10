@@ -14,6 +14,7 @@ from datetime import datetime as dt
 
 MY_URL_BASE = "en.wikipedia.org/wiki/"
 EDUCATION_TYPE = ["education", "college", "alma mater"]
+REMOVE_HEADERS = ['Personal details', 'Signature', 'Names']
 DEFAULT_PROPS = ['born',
                  'education',
                  'college',
@@ -29,6 +30,7 @@ RELATIVES_LABEL = ['parents',
                    'father',
                    'spouse(s)',
                    'relatives',
+                   'family',
                    'members',
                    'relations',
                    'influences',
@@ -69,8 +71,8 @@ class PeopleSpider(scrapy.Spider):
     name = 'people'
     allowed_domains = ['en.wikipedia.org']
 
-    global all_spouses_dict
-    all_spouses_dict = defaultdict()
+    # global all_spouses_dict
+    # all_spouses_dict = defaultdict()
 
     global all_parents_dict
     all_parents_dict = defaultdict()
@@ -83,7 +85,10 @@ class PeopleSpider(scrapy.Spider):
 
     url_base = 'http://en.wikipedia.org/wiki/'
     start_urls = make_urls_list(url_base)
-    # start_urls = ['http://en.wikipedia.org/wiki/Ariel_Sharon']
+    # start_urls = ['http://en.wikipedia.org/wiki/Alec_Baldwin',
+    #               'http://en.wikipedia.org/wiki/Elon_Musk',
+    #               'http://en.wikipedia.org/wiki/Charles,_Prince_of_Wales',
+    #               'http://en.wikipedia.org/wiki/Kat_Timpf']
 
     def parse(self, response):
         all_people_filename = 'all_people.csv'
@@ -91,26 +96,34 @@ class PeopleSpider(scrapy.Spider):
         parents_dict = defaultdict()
         offspring_dict = defaultdict()
         relatives_dict = defaultdict()
-        # print(response.xpath('//table[contains(@class,"vcard"]'))
-        table_classes = response.css('.vcard').xpath("@class").extract()
-        for cls in table_classes:
-            match = re.search(VCARD_TABLE_CLASS, cls)
-            if match:
-                # print("Class = {}".format(match.group(0)))
-                table_cls = match.group(0)
-            # else:
-            #     print(f"No Table Classes match vcard {cls}")
-        if not table_cls:
-            print(f"No Table Classes match vcard {cls}")
-
-        table_cls_str = "//table[@class='{}']/tbody/tr".format(table_cls)
-        my_infobox_trs = response.xpath(table_cls_str)
-
         people_dict = defaultdict()
 
-        raw_name = my_infobox_trs[0].xpath('th/div[@class="fn"]/text()').get()
-        name = urllib.parse.unquote(raw_name)
-        people_dict['name'] = name
+        # print(response.xpath('//table[contains(@class,"vcard"]'))
+        table_classes = response.css('.vcard').xpath("@class").extract()
+        try:
+            for cls in table_classes:
+                match = re.search(VCARD_TABLE_CLASS, cls)
+                if match:
+                    table_cls = match.group(0)
+                    print(f"Class = {table_cls}")
+                    table_cls_str = f"//table[@class='{table_cls}']/tbody//tr"
+                    print(f"table_cls_str: {table_cls_str}")
+                    my_infobox_trs = response.xpath(table_cls_str)
+                    print(f"my_infobox_trs: {my_infobox_trs}")
+                    raw_name = my_infobox_trs.xpath('.//*[contains(@class, "fn")]/text()').get()
+                    print(f"raw_name = {raw_name}")
+                    name = urllib.parse.unquote(raw_name)
+                    print(f"name = {name}")
+                    people_dict['name'] = name
+                    break
+        except Exception as ex:
+            print(f"####### ERROR: Table Class vcard not found in {table_classes}:\n{ex}")
+
+        # table_cls_str = "//table[@class='{}']/tbody/tr".format(table_cls)
+        # print(f"table_cls_str: {table_cls_str}")
+        # my_infobox_trs = response.xpath(table_cls_str)
+        # print(f"my_infobox_trs: {my_infobox_trs}")
+
         people_dict['full_name'] = []
         people_dict['born'] = []
         people_dict['died'] = []
@@ -121,6 +134,7 @@ class PeopleSpider(scrapy.Spider):
         people_dict['offspring'] = []
         people_dict['parents'] = []
         people_dict['relatives'] = []
+        people_dict['house'] = []
         # people_dict['siblings'] = []
         # people_dict['cousin'] = []
         # people_dict['second_cousin'] = []
@@ -156,14 +170,14 @@ class PeopleSpider(scrapy.Spider):
                         print(f"## {label} ##")
                     if label == 'doctoral advisor':
                         print(f"## {label} ##")
-                    if label in ['spouse(s)', 'partner', 'domestic partner']:
+                    if label in ['spouse(s)', 'spouses', 'spouse', 'partner', 'domestic partner']:
                         print(f"## {label} ##")
-                        people_dict, spouse_dict = self.get_spouse_data(tr, people_dict, spouses_dict)
-                        all_spouses_dict.update(spouse_dict)
+                        people_dict = self.get_spouse_data(tr, people_dict)
+                        # all_spouses_dict.update(spouse_dict)
                     if label in ['parent', 'parent(s)', 'mother', 'father']:
                         print(f"## {label} ##")
-                        people_dict, parent_dict = self.get_parents_data(tr, people_dict, parents_dict)
-                        all_parents_dict.update(parent_dict)
+                        people_dict = self.get_parents_data(tr, people_dict)
+                        # all_parents_dict.update(parent_dict)
                     if label == 'children':
                         print(f"## {label} ##")
                         people_dict, offspr_dict = self.get_offspring_data(tr, people_dict, offspring_dict)
@@ -174,9 +188,9 @@ class PeopleSpider(scrapy.Spider):
                     if label == 'died':
                         print(f'## {label} ##')
                         people_dict = self.get_born(tr, people_dict)
-                    if label in ['relatives', 'members', 'relations']:
+                    if label in ['relatives', 'family', 'members', 'house', 'relations']:
                         print(f'## {label} ##')
-                        people_dict = self.get_relatives_data(tr, people_dict)
+                        people_dict = self.get_relatives_data(tr, people_dict, label)
                     if label == 'occupation':
                         print(f'## {label} ##')
                         people_dict = self.get_occupation_data(tr, people_dict)
@@ -189,13 +203,12 @@ class PeopleSpider(scrapy.Spider):
                     if label == 'organization':
                         print(f'## {label} ##')
                     if label == 'employer':
-                        if tr.xpath('td/a/@href'):
-                            employer = tr.xpath('td/a/text()').getall()
-                        else:
-                            employer = tr.xpath('td//text()').getall()
+                        employer = self.get_hrefs_text(tr)
                         people_dict['employer'] = employer
                     if label == 'known for':
                         print(f'## {label} ##')
+                        known_for = self.get_hrefs_text(tr)
+                        people_dict['known_for'] = known_for
                     if label == 'title':
                         print(f'## {label} ##')
                     if label == 'board member of':
@@ -206,19 +219,6 @@ class PeopleSpider(scrapy.Spider):
         # print(people_dict)
         yield people_dict
         # print("____Yielded people_dict____")
-
-        # spouse_names = list(all_spouses_dict.values())
-        # parents_names = list(all_parents_dict.values())
-        # offspring_names = list(all_offspring_dict.values())
-        #
-        # with open(all_people_filename, 'w', newline='') as f:
-        #     csv_writer = csv.writer(f, lineterminator='\n')
-        #     for val in spouse_names:
-        #         csv_writer.writerow([val])
-        #     for val in parents_names:
-        #         csv_writer.writerow([val])
-        #     for val in offspring_names:
-        #         csv_writer.writerow([val])
 
     def get_music_labels(self, tr):
         pass
@@ -244,12 +244,25 @@ class PeopleSpider(scrapy.Spider):
     def get_employer(self, tr):
         pass
 
+    def get_hrefs_text(self, tr):
+        if tr.xpath('td/a/@href'):
+            my_text = tr.xpath('td/a/text()').getall()
+        else:
+            my_text = tr.xpath('td//text()').getall()
+
+        # Remove values that are commas
+        for text in my_text:
+            if text == ', ':
+                my_text.remove(text)
+
+        return my_text
+
     def get_header_data(self, my_headers, positions_dict):
         my_positions_list = []
         for header in my_headers:
             positions = header.xpath('.//text()').getall()
             position = "".join(positions)
-            if position != "Personal details":
+            if position not in ["Personal details", "Signature", "Names"]:
                 my_positions_list.append(position)
 
         positions_dict['positions'] = my_positions_list
@@ -286,13 +299,23 @@ class PeopleSpider(scrapy.Spider):
 
         return my_people_dict
 
-    def get_relatives_data(self, tr, my_people_dict):
+    def get_relatives_data(self, tr, my_people_dict, my_label):
         if tr.xpath('td//@href') not in [None, '']:
             relatives = tr.xpath('td//a/text()').getall()
         else:
             relatives = tr.xpath('td//text()').getall()
 
-        my_people_dict['relatives'] = relatives
+        # if my_label in ['house', 'family']:
+        #         #     my_people_dict['house'] = relatives.strip(' family')
+        #         #     return my_people_dict
+
+        for relative in relatives:
+            print(f"Relative: {relative}")
+            # my_people_dict['house'].append(relative.strip(' family'))
+            if my_label in ['house', 'family']:
+                my_people_dict['house'].append(relative.strip(' family'))
+            else:
+                my_people_dict['relatives'].append(relative)
 
         return my_people_dict
 
@@ -320,56 +343,46 @@ class PeopleSpider(scrapy.Spider):
             # print(f"Offspring cannot be retrieved from {my_offspring_data}")
         return my_people_dict, my_offspring_dict
 
-    def get_spouse_data(self, my_spouse_data, my_people_dict, my_spouses_dict):
+    def get_spouse_data(self, my_spouse_data, my_people_dict):
         spouse_list = []
         # if my_spouse_data.xpath('td/descendant-or-self::*/@href').get() not in [None, '']:
-        if my_spouse_data.xpath('td//@href').get() not in [None, '']:
-            spouse_href = my_spouse_data.xpath('td//@href').get()
+        if my_spouse_data.xpath('td//@href') not in [None, '']:
+            spouse_href = my_spouse_data.xpath('td//@href').getall()
             # print(len(spouse_href))
             for wiki in spouse_href:
-                spouse_name = wiki.get().split('/')[-1].replace('_', ' ')
+                spouse_name = wiki.split('/')[-1].replace('_', ' ')
                 if not spouse_name.startswith('#'):
                     spouse_list.append(spouse_name)
-                    wiki_page_name = wiki.get().split('/')[-1]
-                    my_spouses_dict[spouse_name] = wiki_page_name
+                    # wiki_page_name = wiki.get().split('/')[-1]
+                    # my_spouses_dict[spouse_name] = wiki_page_name
                     # print(spouse_name)
                     # print(f"wiki: {wiki_page_name}")
             my_people_dict['spouses'] = spouse_list
         # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
         elif my_spouse_data.xpath('td//text()').get() not in [None, '']:
-            spouse_name = my_spouse_data.xpath('td//text()').get()
+            spouse_name = my_spouse_data.xpath('td//text()').getall()
             my_people_dict['spouses'] = spouse_name
             # print(spouse_name)
         else:
             my_people_dict['spouse'] += 'unknown'
             # print(f"Spouse cannot be retrieved from {my_spouse_data}")
 
-        return my_people_dict, my_spouses_dict
+        return my_people_dict
 
-    def get_parents_data(self, my_parent_data, my_people_dict, my_parents_dict):
+    def get_parents_data(self, my_parent_data, my_people_dict):
         parents_list = []
-        if my_parent_data.xpath('td//@href').get() not in [None, '']:
-            parent_href = my_parent_data.xpath('td//@href')
-            # print(len(parent_href))
+        if my_parent_data.xpath('td//@href') not in [None, '']:
+            parent_href = my_parent_data.xpath('td//a/text()').getall()
             for wiki in parent_href:
-                parent_name = wiki.get().split('/')[-1].replace('_', ' ')
-                if not parent_name.startswith('#'):
-                    parents_list.append(parent_name)
-                    wiki_page_name = wiki.get().split('/')[-1]
-                    my_parents_dict[parent_name] = wiki_page_name
-                    # print(parent_name)
-                    # print(f"wiki: {wiki_page_name}")
-            my_people_dict['parents'] = parents_list
-        # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
+                if not wiki.startswith('#'):
+                    my_people_dict['parents'].append(wiki)
         elif my_parent_data.xpath('td//text()').get() not in [None, '']:
             parent_name = my_parent_data.xpath('td//text()').getall()
-            my_people_dict['parents'] += parent_name
-            # print(parent_name)
+            my_people_dict['parents'].append(parent_name)
         else:
-            my_people_dict['parents'] += 'unknown'
-            # print(f"Parents cannot be retrieved from {my_parent_data}")
+            my_people_dict['parents'].append(None)
 
-        return my_people_dict, my_parents_dict
+        return my_people_dict
 
     def get_education_data(self, tr, my_people_dict):
         schools_list = []
