@@ -2,6 +2,7 @@ import scrapy
 import urllib
 import re
 import csv
+import neo4j
 # import pandas as pd
 
 from collections import defaultdict
@@ -84,18 +85,20 @@ class PeopleSpider(scrapy.Spider):
     all_relatives_dict = defaultdict()
 
     url_base = 'http://en.wikipedia.org/wiki/'
-    start_urls = make_urls_list(url_base)
-    # start_urls = ['http://en.wikipedia.org/wiki/Alec_Baldwin',
-    #               'http://en.wikipedia.org/wiki/Elon_Musk',
-    #               'http://en.wikipedia.org/wiki/Charles,_Prince_of_Wales',
-    #               'http://en.wikipedia.org/wiki/Kat_Timpf']
+    # start_urls = make_urls_list(url_base)
+    start_urls = ['http://en.wikipedia.org/wiki/Alec_Baldwin',
+                  'http://en.wikipedia.org/wiki/Jared_Leto',
+                  'http://en.wikipedia.org/wiki/Elon_Musk',
+                  'http://en.wikipedia.org/wiki/Charles,_Prince_of_Wales',
+                  'http://en.wikipedia.org/wiki/Kat_Timpf',
+                  'http://en.wikipedia.org/wiki/Charles_Aznavour']
 
     def parse(self, response):
         all_people_filename = 'all_people.csv'
         spouses_dict = defaultdict()
         parents_dict = defaultdict()
-        offspring_dict = defaultdict()
         relatives_dict = defaultdict()
+        offspring_dict = defaultdict()
         people_dict = defaultdict()
 
         # print(response.xpath('//table[contains(@class,"vcard"]'))
@@ -127,9 +130,12 @@ class PeopleSpider(scrapy.Spider):
         people_dict['full_name'] = []
         people_dict['born'] = []
         people_dict['died'] = []
+        people_dict['citizenship'] = []
         people_dict['known_for'] = []
         people_dict['schools'] = []
         people_dict['degrees'] = []
+        people_dict['organizations'] = []
+        people_dict['institutions'] = []
         people_dict['spouses'] = []
         people_dict['offspring'] = []
         people_dict['parents'] = []
@@ -139,11 +145,13 @@ class PeopleSpider(scrapy.Spider):
         # people_dict['cousin'] = []
         # people_dict['second_cousin'] = []
         people_dict['title'] = []
+        people_dict['doctoral_advisor'] = []
+        people_dict['fields'] = []
         people_dict['positions'] = []
         people_dict['occupation'] = []
         people_dict['employer'] = []
         people_dict['political_party'] = []
-        people_dict['board_member_of'] = []
+        people_dict['board_member'] = []
         people_dict['labels'] = []
 
         print(f"\n========  {people_dict['name']} ========")
@@ -166,22 +174,24 @@ class PeopleSpider(scrapy.Spider):
                     if label in EDUCATION_TYPE:
                         print(f"## {label} ##")
                         people_dict = self.get_education_data(tr, people_dict)
-                    if label == 'field':
+                    if 'field' in label:
                         print(f"## {label} ##")
+                        fields = self.get_hrefs_text(tr)
+                        people_dict['fields'] = fields
                     if label == 'doctoral advisor':
                         print(f"## {label} ##")
+                        advisor = self.get_hrefs_text(tr)
+                        people_dict['doctoral_advisor'] = advisor
                     if label in ['spouse(s)', 'spouses', 'spouse', 'partner', 'domestic partner']:
                         print(f"## {label} ##")
                         people_dict = self.get_spouse_data(tr, people_dict)
-                        # all_spouses_dict.update(spouse_dict)
                     if label in ['parent', 'parent(s)', 'mother', 'father']:
                         print(f"## {label} ##")
                         people_dict = self.get_parents_data(tr, people_dict)
-                        # all_parents_dict.update(parent_dict)
                     if label == 'children':
                         print(f"## {label} ##")
-                        people_dict, offspr_dict = self.get_offspring_data(tr, people_dict, offspring_dict)
-                        all_offspring_dict.update(offspr_dict)
+                        people_dict = self.get_offspring_data(tr, people_dict)
+                        # all_offspring_dict.update(offspr_dict)
                     if label in ['born', 'date of birth']:
                         print(f'## {label} ##')
                         people_dict = self.get_died(tr, people_dict)
@@ -196,13 +206,22 @@ class PeopleSpider(scrapy.Spider):
                         people_dict = self.get_occupation_data(tr, people_dict)
                     if label == 'citizenship':
                         print(f'## {label} ##')
-                        # TODO: Grab citizenship data
+                        employer = self.get_hrefs_text(tr)
+                        people_dict['citizenship'] = employer
                     if label == 'political party':
                         print(f'## {label} ##')
-                        # TODO: Grab political party dta
-                    if label == 'organization':
+                        party = self.get_hrefs_text(tr)
+                        people_dict['political_party'] = party
+                    if 'organization' in label:
                         print(f'## {label} ##')
+                        organization = self.get_hrefs_text(tr)
+                        people_dict['organizations'] = organization
+                    if 'institution' in label:
+                        print(f'## {label} ##')
+                        institution = self.get_hrefs_text(tr)
+                        people_dict['institutions'] = institution
                     if label == 'employer':
+                        print(f'## {label} ##')
                         employer = self.get_hrefs_text(tr)
                         people_dict['employer'] = employer
                     if label == 'known for':
@@ -211,14 +230,17 @@ class PeopleSpider(scrapy.Spider):
                         people_dict['known_for'] = known_for
                     if label == 'title':
                         print(f'## {label} ##')
+                        title = self.get_hrefs_text(tr)
+                        people_dict['title'] = title
                     if label == 'board member of':
                         print(f'## {label} ##')
+                        board_member = self.get_hrefs_text(tr)
+                        people_dict['board_member'] = board_member
                     if label == 'labels':
                         print(f'## {label} ##')
-
-        # print(people_dict)
+                        labels = self.get_hrefs_text(tr)
+                        people_dict['labels'] = labels
         yield people_dict
-        # print("____Yielded people_dict____")
 
     def get_music_labels(self, tr):
         pass
@@ -246,13 +268,13 @@ class PeopleSpider(scrapy.Spider):
 
     def get_hrefs_text(self, tr):
         if tr.xpath('td/a/@href'):
-            my_text = tr.xpath('td/a/text()').getall()
+            my_text = tr.xpath('td//a/text()').getall()
         else:
             my_text = tr.xpath('td//text()').getall()
 
         # Remove values that are commas
         for text in my_text:
-            if text == ', ':
+            if text in [', ', '', None]:
                 my_text.remove(text)
 
         return my_text
@@ -310,38 +332,36 @@ class PeopleSpider(scrapy.Spider):
         #         #     return my_people_dict
 
         for relative in relatives:
-            print(f"Relative: {relative}")
             # my_people_dict['house'].append(relative.strip(' family'))
-            if my_label in ['house', 'family']:
+            if my_label in ['house', 'family'] or ' family' in relative.lower():
                 my_people_dict['house'].append(relative.strip(' family'))
             else:
                 my_people_dict['relatives'].append(relative)
 
         return my_people_dict
 
-    def get_offspring_data(self, my_offspring_data, my_people_dict, my_offspring_dict):
-        offspring_list = []
-        if my_offspring_data.xpath('td//@href').get() not in [None, '']:
-            offspring_href = my_offspring_data.xpath('td//@href')
-            # print(f"Found offspring hrefs!")
-            for wiki in offspring_href:
-                offspring_name = wiki.get().split('/')[-1].replace('_', ' ')
+    def get_offspring_data(self, my_offspring_data, my_people_dict):
+        if my_offspring_data.xpath('td//@href') not in [None, '']:
+            offspring_href = my_offspring_data.xpath('td//@href').getall()
+            print(offspring_href)
+            for name in offspring_href:
+                offspring_name = name.split('/')[-1].replace('_', ' ')
                 if not offspring_name.startswith('#'):
-                    offspring_list.append(offspring_name)
-                    wiki_page_name =  wiki.get().split('/')[-1]
-                    my_offspring_dict[offspring_name] = wiki_page_name
+                    my_people_dict['offspring'].append(offspring_name)
+                    # wiki_page_name = wiki.get().split('/')[-1]
+                    # my_offspring_dict[offspring_name] = wiki_page_name
                     # print(f"Offspring name: {offspring_name}")
                     # print(f"wiki: {wiki_page_name}")
-            my_people_dict['offspring'] = offspring_list
+            # my_people_dict['offspring'] = offspring_list
             # elif my_spouse_data.xpath('td/descendant-or-self::*/div/text()').get() not in [None, '']:
-        elif my_offspring_data.xpath('td//text()').get() not in [None, '']:
+        elif my_offspring_data.xpath('td//text()') not in [None, '']:
             offspring_name = my_offspring_data.xpath('td//text()').getall()
             my_people_dict['offspring'] = offspring_name
             # print(f"Number of offspring: {offspring_name}")
         else:
-            my_people_dict['offspring'] += 'unknown'
-            # print(f"Offspring cannot be retrieved from {my_offspring_data}")
-        return my_people_dict, my_offspring_dict
+            my_people_dict['offspring'] = None
+
+        return my_people_dict
 
     def get_spouse_data(self, my_spouse_data, my_people_dict):
         spouse_list = []

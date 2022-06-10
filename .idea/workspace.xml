@@ -1,23 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds people_output.csv results file.">
-      <change afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_full.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_gaps.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_results.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikigrabber/carolingian_rebertian_bosonid.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikigrabber/merovingians.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikigrabber/royal_houses.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikigrabber/tudors.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wikigrabber/windsors.csv" afterDir="false" />
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds known_for handling using get_hrefs_text().">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/people_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/people_notebook.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wikicrawler/all_people.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/all_people.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikicrawler/people_output.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikigrabber/all_people.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikigrabber/all_people.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler_full.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_full.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikigrabber/people_base.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikigrabber/people_base.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -30,8 +22,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="289">
-              <caret line="140" column="42" lean-forward="true" selection-start-line="140" selection-start-column="42" selection-end-line="140" selection-end-column="42" />
+            <state relative-caret-position="-1780">
+              <caret line="187" column="76" lean-forward="true" selection-start-line="187" selection-start-column="76" selection-end-line="187" selection-end-column="76" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -42,8 +34,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+            <state relative-caret-position="-1288">
+              <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -67,6 +59,13 @@
       <find>get_dday(</find>
       <find>sibling</find>
       <find>['sibling</find>
+      <find>get_spouse_data</find>
+      <find>VCARD_TABLE_CLASS</find>
+      <find>get_header_data</find>
+      <find>parents_list</find>
+      <find>get_parents_data</find>
+      <find>get_occupation_data</find>
+      <find>get_offspring_data</find>
     </findStrings>
     <replaceStrings>
       <replace>EDUCATION_TYPE</replace>
@@ -91,8 +90,8 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="70" />
-    <option name="y" value="65" />
+    <option name="x" value="165" />
+    <option name="y" value="75" />
     <option name="width" value="3470" />
     <option name="height" value="1955" />
   </component>
@@ -329,7 +328,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654735775853</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="Updates people_output.csv to wikicrawler_results.csv, and updates people.py for accurate scraping of headers and order of columns.">
+      <created>1654758561108</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1654758561108</updated>
+    </task>
+    <task id="LOCAL-00025" summary="Adds known_for handling using get_hrefs_text().">
+      <created>1654820499625</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1654820499625</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TodoView">
@@ -342,7 +355,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="28" y="26" width="1388" height="782" extended-state="0" />
+    <frame x="66" y="30" width="1388" height="782" extended-state="0" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14736842" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -353,7 +366,7 @@
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" weight="0.3287879" />
+      <window_info anchor="bottom" id="TODO" order="6" weight="0.32822084" />
       <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49798504" visible="true" weight="0.21625766" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32902467" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.502015" side_tool="true" weight="0.32902467" />
@@ -386,7 +399,9 @@
     <MESSAGE value="Collected ~75,300 wikis." />
     <MESSAGE value="Trial run results for base neo4j development." />
     <MESSAGE value="Adds people_output.csv results file." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds people_output.csv results file." />
+    <MESSAGE value="Updates people_output.csv to wikicrawler_results.csv, and updates people.py for accurate scraping of headers and order of columns." />
+    <MESSAGE value="Adds known_for handling using get_hrefs_text()." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds known_for handling using get_hrefs_text()." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
@@ -414,15 +429,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+        <state relative-caret-position="-1288">
+          <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="289">
-          <caret line="140" column="42" lean-forward="true" selection-start-line="140" selection-start-column="42" selection-end-line="140" selection-end-column="42" />
+        <state relative-caret-position="-1780">
+          <caret line="187" column="76" lean-forward="true" selection-start-line="187" selection-start-column="76" selection-end-line="187" selection-end-column="76" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
