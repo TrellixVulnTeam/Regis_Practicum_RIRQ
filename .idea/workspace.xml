@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds known_for handling using get_hrefs_text().">
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds remaining labels.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/people_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/people_notebook.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikicrawler/all_people.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/all_people.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler_full.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_full.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikigrabber/people_base.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikigrabber/people_base.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -22,20 +19,11 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1780">
-              <caret line="187" column="76" lean-forward="true" selection-start-line="187" selection-start-column="76" selection-end-line="187" selection-end-column="76" />
+            <state relative-caret-position="170">
+              <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1288">
-              <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
             </state>
           </provider>
         </entry>
@@ -342,7 +330,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654820499625</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="Adds remaining labels.">
+      <created>1654843629804</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1654843629804</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TodoView">
@@ -357,7 +352,7 @@
   <component name="ToolWindowManager">
     <frame x="66" y="30" width="1388" height="782" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14736842" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14962406" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -401,7 +396,8 @@
     <MESSAGE value="Adds people_output.csv results file." />
     <MESSAGE value="Updates people_output.csv to wikicrawler_results.csv, and updates people.py for accurate scraping of headers and order of columns." />
     <MESSAGE value="Adds known_for handling using get_hrefs_text()." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds known_for handling using get_hrefs_text()." />
+    <MESSAGE value="Adds remaining labels." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds remaining labels." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
@@ -427,20 +423,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1288">
-          <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1780">
-          <caret line="187" column="76" lean-forward="true" selection-start-line="187" selection-start-column="76" selection-end-line="187" selection-end-column="76" />
+        <state relative-caret-position="170">
+          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="697">
+          <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
         </state>
       </provider>
     </entry>

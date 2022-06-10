@@ -1,5 +1,6 @@
 import scrapy
 import urllib
+import os
 import re
 import csv
 import neo4j
@@ -70,28 +71,16 @@ def make_urls_list(my_url_base):
 
 class PeopleSpider(scrapy.Spider):
     name = 'people'
+    os.remove('C:\\Users\\tyben\\Documents\\Regis\\MSDE_692\\final_project\\wikicrawler\\wikicrawler_results.csv')
     allowed_domains = ['en.wikipedia.org']
-
-    # global all_spouses_dict
-    # all_spouses_dict = defaultdict()
-
-    global all_parents_dict
-    all_parents_dict = defaultdict()
-
-    global all_offspring_dict
-    all_offspring_dict = defaultdict()
-
-    global all_relatives_dict
-    all_relatives_dict = defaultdict()
-
     url_base = 'http://en.wikipedia.org/wiki/'
-    # start_urls = make_urls_list(url_base)
-    start_urls = ['http://en.wikipedia.org/wiki/Alec_Baldwin',
-                  'http://en.wikipedia.org/wiki/Jared_Leto',
-                  'http://en.wikipedia.org/wiki/Elon_Musk',
-                  'http://en.wikipedia.org/wiki/Charles,_Prince_of_Wales',
-                  'http://en.wikipedia.org/wiki/Kat_Timpf',
-                  'http://en.wikipedia.org/wiki/Charles_Aznavour']
+    start_urls = make_urls_list(url_base)
+    # start_urls = ['http://en.wikipedia.org/wiki/Alec_Baldwin',
+    #               'http://en.wikipedia.org/wiki/Jared_Leto',
+    #               'http://en.wikipedia.org/wiki/Elon_Musk',
+    #               'http://en.wikipedia.org/wiki/Charles,_Prince_of_Wales',
+    #               'http://en.wikipedia.org/wiki/Kat_Timpf',
+    #               'http://en.wikipedia.org/wiki/Charles_Aznavour']
 
     def parse(self, response):
         all_people_filename = 'all_people.csv'
