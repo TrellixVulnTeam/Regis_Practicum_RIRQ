@@ -1,4 +1,7 @@
+# -*- coding: utf-8 -*-
+
 import scrapy
+import urllib
 import sys
 import re
 import os
@@ -13,9 +16,11 @@ MY_URL_BASE = "en.wikipedia.org/wiki/"
 
 """Regular Expressions"""
 VCARD_TABLE_CLASS = re.compile(r'infobox.*')
-PREFS_LIST = ["Wikipedia", "index.php", "#"]
+PREFS_LIST = ["Wikipedia", "#", 'index']
 NBSP = "\xa0"
 HREFS_LABEL = ['parents',
+               'father',
+               'mother',
                'parent(s)',
                'spouse(s)',
                'relatives',
@@ -33,7 +38,10 @@ HREFS_LABEL = ['parents',
                'president',
                'vice president',
                'partner(s)',
-               'domestic partner']
+               'domestic partner',
+               'predecessor',
+               'doctoral advisor',
+               'doctoral students']
 FAMILY_REGEX = re.compile(r'.*family')
 
 # //div[@class='treeview']//li//@href
@@ -46,13 +54,7 @@ FAMILY_REGEX = re.compile(r'.*family')
 def make_urls_list(my_url_base):
     urls_list = []
 
-    # with open('people.csv', 'r') as file:
-    #     csvFile = csv.reader(file)
-    #     for line in csvFile:
-    #         if line[0] not in names_list:
-    #             names_list.append(line[0])
-
-    with open('people_base.csv', 'r') as file:
+    with open('people_base.csv', 'r', encoding='unicode_escape') as file:
         csv_reader = csv.reader(file)
         first_row = next(csv_reader)
         if first_row != 'wiki':
@@ -68,7 +70,7 @@ def make_urls_list(my_url_base):
 def csv_reader(csv_file):
     final_list = []
 
-    with open(csv_file, 'r') as f:
+    with open(csv_file, 'r', encoding='unicode_escape') as f:
         input_list = csv.reader(f)
 
         for row in input_list:
@@ -112,7 +114,7 @@ def csv_writer(out_file, my_list):
         csv_writer = csv.writer(outfile)
 
         for row in my_list:
-            csv_writer.writerows(row)
+            csv_writer.writerow([row])
 
 
 class GrabwikisSpider(scrapy.Spider):
@@ -148,15 +150,6 @@ class GrabwikisSpider(scrapy.Spider):
                 # if tr.xpath('th/descendant-or-self::*/text()').get() not in [None, '']:
                 label_raw = tr.xpath('th/descendant-or-self::*/text()').get().lower()
                 label = label_raw.replace(NBSP, " ")
-                # if label == 'spouse(s)':
-                #     print(f"## {label} ##")
-                #     wikis = (self.get_spouse_data(tr))
-                # if label in ['parent', 'parent(s)']:
-                #     print(f"## {label} ##")
-                #     wikis = self.get_parents_data(tr)
-                # if label == 'children':
-                #     print(f"## {label} ##")
-                #     wikis = self.get_offspring_data(tr)
                 if label in HREFS_LABEL:
                     print(f'## {label} ##')
                     wikis = self.get_hrefs_data(tr)
@@ -165,18 +158,23 @@ class GrabwikisSpider(scrapy.Spider):
                 if isinstance(wikis, list):
                     for wiki in wikis:
                         if wiki.startswith('/wiki/'):
-                            print(wiki)
+                            wiki_decoded = urllib.parse.unquote(wiki)
+                            print(wiki_decoded.split('/')[-1])
+                            # print(wiki)
                             yield {'wiki': wiki.split('/')[-1]}
                 elif isinstance(wikis, str):
                     if wikis.startswith('/wiki/'):
-                        print(wikis)
-                        yield {'wiki': wikis.split('/')[-1]}
+                        wiki_decoded = urllib.parse.unquote(wiki)
+                        print(wiki_decoded.split('/')[-1])
+                        # print(wiki)
+                        yield {'wiki': wiki.split('/')[-1]}
 
     def get_hrefs_data(self, tr):
         if tr.xpath('td//@href') not in [None, '']:
             hrefs = tr.xpath('td//@href').getall()
+            # hrefs_encoded = tr.xpath('td//@href').getall()
+            # hrefs = [urllib.parse.unquote(x, encoding='utf-8', errors='replace') for x in hrefs_encoded]
             # print(list(relatives))
             return hrefs
         else:
             return None
-

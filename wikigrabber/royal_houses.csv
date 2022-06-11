@@ -1,0 +1,9 @@
+﻿family,xpath
+House_of_Tudor,
+House_of_Windsor,"'//*[@id=""mw-content-text""]/div[1]/table[3]/tbody/tr[2]/td/table/tbody//tr/td//a/@href'"
+House_of_Merovingian,"'//*[@id=""mw-content-text""]/div[1]/table[1]/tbody/tr[2]/td/table/tbody//tr//td/a/@href'"
+Carloingian_Robertian_Bosinid,"'//*[@id=""mw-content-text""]/div[1]/table[2]/tbody/tr[2]/td/table/tbody//tr//td//a/@href'"
+Family_tree_of_French_monarchs,
+Family_tree_of_Spanish_monarchs,
+House_of_Bourbon,
+Kennedy_family,
