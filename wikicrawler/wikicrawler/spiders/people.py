@@ -197,7 +197,7 @@ class PeopleSpider(scrapy.Spider):
                         print(f'## {label} ##')
                         employer = self.get_hrefs_text(tr)
                         people_dict['citizenship'] = employer
-                    if label == 'political party':
+                    if label in ['political party', 'other political affiliations']:
                         print(f'## {label} ##')
                         party = self.get_hrefs_text(tr)
                         people_dict['political_party'] = party

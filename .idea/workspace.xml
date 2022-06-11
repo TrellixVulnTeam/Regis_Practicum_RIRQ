@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds remaining labels.">
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds backup file.">
+      <change afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_results.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/people_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/people_notebook.ipynb" afterDir="false" />
@@ -19,8 +20,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
+            <state relative-caret-position="272">
+              <caret line="199" column="84" selection-start-line="199" selection-start-column="84" selection-end-line="199" selection-end-column="84" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -337,7 +338,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654843629804</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Updates notebook for string to list conversion.">
+      <created>1654896590317</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1654896590317</updated>
+    </task>
+    <task id="LOCAL-00028" summary="Adds backup file.">
+      <created>1654896845706</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1654896845706</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="TodoView">
@@ -362,7 +377,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32822084" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49798504" visible="true" weight="0.21625766" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49798504" visible="true" weight="0.2868098" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32902467" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.502015" side_tool="true" weight="0.32902467" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32902467" />
@@ -397,7 +412,9 @@
     <MESSAGE value="Updates people_output.csv to wikicrawler_results.csv, and updates people.py for accurate scraping of headers and order of columns." />
     <MESSAGE value="Adds known_for handling using get_hrefs_text()." />
     <MESSAGE value="Adds remaining labels." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds remaining labels." />
+    <MESSAGE value="Updates notebook for string to list conversion." />
+    <MESSAGE value="Adds backup file." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds backup file." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
@@ -423,20 +440,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="67" lean-forward="true" selection-start-line="67" selection-end-line="67" />
-          <folding>
-            <element signature="e#0#13#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="697">
           <caret line="50" column="56" selection-start-line="50" selection-start-column="56" selection-end-line="50" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler_results_ver1.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="199" column="84" selection-start-line="199" selection-start-column="84" selection-end-line="199" selection-end-column="84" />
+          <folding>
+            <element signature="e#0#13#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
