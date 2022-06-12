@@ -71,7 +71,8 @@ def make_urls_list(my_url_base):
 
 class PeopleSpider(scrapy.Spider):
     name = 'people'
-    os.remove('C:\\Users\\tyben\\Documents\\Regis\\MSDE_692\\final_project\\wikicrawler\\wikicrawler_results.csv')
+    os.remove('C:\\Users\\Bensink\\Documents\\Education\\Regis\\MSDE_692\\final_project\\Regis_Practicum\\wikicrawler\\wikicrawler_results.csv')
+    # os.remove('C:\\Users\\tyben\\Documents\\Education\\Regis\\MSDE_692\\final_project\\Regis_Practicum\\wikicrawler\\wikicrawler_results.csv')
     allowed_domains = ['en.wikipedia.org']
     url_base = 'http://en.wikipedia.org/wiki/'
     start_urls = make_urls_list(url_base)
