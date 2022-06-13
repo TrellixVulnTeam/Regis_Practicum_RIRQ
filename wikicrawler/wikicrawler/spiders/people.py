@@ -124,8 +124,8 @@ class PeopleSpider(scrapy.Spider):
         people_dict['known_for'] = []
         people_dict['schools'] = []
         people_dict['degrees'] = []
-        people_dict['organizations'] = []
-        people_dict['institutions'] = []
+        people_dict['organization'] = []
+        people_dict['institution'] = []
         people_dict['spouses'] = []
         people_dict['offspring'] = []
         people_dict['parents'] = []
@@ -137,7 +137,7 @@ class PeopleSpider(scrapy.Spider):
         people_dict['title'] = []
         people_dict['doctoral_advisor'] = []
         people_dict['fields'] = []
-        people_dict['positions'] = []
+        people_dict['institution'] = []
         people_dict['occupation'] = []
         people_dict['employer'] = []
         people_dict['political_party'] = []
@@ -205,11 +205,11 @@ class PeopleSpider(scrapy.Spider):
                     if 'organization' in label:
                         print(f'## {label} ##')
                         organization = self.get_hrefs_text(tr)
-                        people_dict['organizations'] = organization
+                        people_dict['organization'] = organization
                     if 'institution' in label:
                         print(f'## {label} ##')
                         institution = self.get_hrefs_text(tr)
-                        people_dict['institutions'] = institution
+                        people_dict['institution'] = institution
                     if label == 'employer':
                         print(f'## {label} ##')
                         employer = self.get_hrefs_text(tr)
