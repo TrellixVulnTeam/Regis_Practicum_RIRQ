@@ -136,7 +136,7 @@ class PeopleSpider(scrapy.Spider):
         # people_dict['second_cousin'] = []
         people_dict['title'] = []
         people_dict['doctoral_advisor'] = []
-        people_dict['fields'] = []
+        people_dict['field'] = []
         people_dict['institution'] = []
         people_dict['occupation'] = []
         people_dict['employer'] = []
@@ -277,7 +277,7 @@ class PeopleSpider(scrapy.Spider):
             if position not in ["Personal details", "Signature", "Names"]:
                 my_positions_list.append(position)
 
-        positions_dict['positions'] = my_positions_list
+        positions_dict['position'] = my_positions_list
 
         return positions_dict
 
