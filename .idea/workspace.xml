@@ -1,8 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds wikicrawler backup.">
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds spontaneous names to people_base.csv.">
+      <change afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_ABCD.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_EF.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_GH.xlsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/people_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/people_notebook.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikicrawler/all_people.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/all_people.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_gaps.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_gaps.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikigrabber/all_people.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikigrabber/all_people.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/wikigrabber/people_base.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikigrabber/people_base.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,16 +22,30 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="812">
+            <state relative-caret-position="384">
               <caret line="200" column="84" selection-start-line="200" selection-start-column="84" selection-end-line="200" selection-end-column="84" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
             </state>
           </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/wikigrabber/royal_houses.csv">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="187">
+              <caret line="11" selection-start-line="11" selection-end-line="11" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/wikigrabber/people_base.csv">
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -70,6 +94,8 @@
         <option value="$PROJECT_DIR$/bildercrawler/bildercrawler/bildercrawler/spiders/bilderberg.py" />
         <option value="$PROJECT_DIR$/wikigrabber/wikigrabber/spiders/grabwikis.py" />
         <option value="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" />
+        <option value="$PROJECT_DIR$/wikigrabber/royal_houses.csv" />
+        <option value="$PROJECT_DIR$/wikicrawler/all_people.csv" />
       </list>
     </option>
   </component>
@@ -94,6 +120,11 @@
             <path>
               <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
               <item name="final_project" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
+              <item name="final_project" type="462c0819:PsiDirectoryNode" />
+              <item name="bildercrawler" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="final_project" type="b2602c69:ProjectViewProjectNode" />
@@ -361,7 +392,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654925192852</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="Adds spontaneous names to people_base.csv.">
+      <created>1655352068218</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1655352068218</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="TodoView">
@@ -376,7 +414,7 @@
   <component name="ToolWindowManager">
     <frame x="66" y="30" width="1388" height="782" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1518797" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15413533" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -398,7 +436,6 @@
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Experimenting with a one-line method for grabbing degree and school data." />
     <MESSAGE value="Completes get_education_data()." />
     <MESSAGE value="TODO added." />
     <MESSAGE value="Uncommented label conditionals for test run." />
@@ -423,7 +460,8 @@
     <MESSAGE value="Adds backup file." />
     <MESSAGE value="Formats and cleans up born/died columns and adds age column." />
     <MESSAGE value="Adds wikicrawler backup." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds wikicrawler backup." />
+    <MESSAGE value="Adds spontaneous names to people_base.csv." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds spontaneous names to people_base.csv." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
@@ -459,13 +497,42 @@
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler_results_ver1.csv" />
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="812">
+        <state relative-caret-position="384">
           <caret line="200" column="84" selection-start-line="200" selection-start-column="84" selection-end-line="200" selection-end-column="84" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1938" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikigrabber/all_people.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="76161" column="17" lean-forward="true" selection-start-line="76161" selection-start-column="17" selection-end-line="76161" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikicrawler/all_people.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1609809">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikigrabber/royal_houses.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" selection-start-line="11" selection-end-line="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/wikigrabber/people_base.csv">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
 </project>
