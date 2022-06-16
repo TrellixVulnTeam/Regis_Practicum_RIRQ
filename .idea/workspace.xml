@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds backup file.">
-      <change afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_results.csv" afterDir="false" />
+    <list default="true" id="87a31a5f-39b6-44da-969c-fae3fbab30e4" name="Default" comment="Adds wikicrawler backup.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/people_notebook-checkpoint.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/people_notebook.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/people_notebook.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv" beforeDir="false" afterPath="$PROJECT_DIR$/wikicrawler/wikicrawler_no_blanks.csv" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -20,8 +15,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="199" column="84" selection-start-line="199" selection-start-column="84" selection-end-line="199" selection-end-column="84" />
+            <state relative-caret-position="812">
+              <caret line="200" column="84" selection-start-line="200" selection-start-column="84" selection-end-line="200" selection-end-column="84" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -92,6 +87,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -121,7 +117,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -352,7 +347,21 @@
       <option name="project" value="LOCAL" />
       <updated>1654896845706</updated>
     </task>
-    <option name="localTasksCounter" value="29" />
+    <task id="LOCAL-00029" summary="Formats and cleans up born/died columns and adds age column.">
+      <created>1654925028943</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1654925028943</updated>
+    </task>
+    <task id="LOCAL-00030" summary="Adds wikicrawler backup.">
+      <created>1654925192852</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1654925192852</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TodoView">
@@ -367,7 +376,7 @@
   <component name="ToolWindowManager">
     <frame x="66" y="30" width="1388" height="782" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14962406" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1518797" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -377,7 +386,7 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32822084" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49798504" visible="true" weight="0.2868098" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="7" sideWeight="0.49798504" visible="true" weight="0.2852761" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.32902467" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.502015" side_tool="true" weight="0.32902467" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32902467" />
@@ -389,8 +398,6 @@
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Adds get_education_data() to build school and degree lists." />
-    <MESSAGE value="Adds all_people.csv file to supplement poeple.csv file for collecting new people wikis." />
     <MESSAGE value="Experimenting with a one-line method for grabbing degree and school data." />
     <MESSAGE value="Completes get_education_data()." />
     <MESSAGE value="TODO added." />
@@ -414,7 +421,9 @@
     <MESSAGE value="Adds remaining labels." />
     <MESSAGE value="Updates notebook for string to list conversion." />
     <MESSAGE value="Adds backup file." />
-    <option name="LAST_COMMIT_MESSAGE" value="Adds backup file." />
+    <MESSAGE value="Formats and cleans up born/died columns and adds age column." />
+    <MESSAGE value="Adds wikicrawler backup." />
+    <option name="LAST_COMMIT_MESSAGE" value="Adds wikicrawler backup." />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/rhodes.py" />
@@ -447,13 +456,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler_results_ver1.csv">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler_results_ver1.csv" />
     <entry file="file://$PROJECT_DIR$/wikicrawler/wikicrawler/spiders/people.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="199" column="84" selection-start-line="199" selection-start-column="84" selection-end-line="199" selection-end-column="84" />
+        <state relative-caret-position="812">
+          <caret line="200" column="84" selection-start-line="200" selection-start-column="84" selection-end-line="200" selection-end-column="84" />
           <folding>
             <element signature="e#0#13#0" expanded="true" />
           </folding>
