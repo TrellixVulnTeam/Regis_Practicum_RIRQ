@@ -13,6 +13,11 @@ from datetime import datetime as dt
 ############## Neo4j References ##############
 # https://neo4j.com/developer/desktop-csv-import/
 # https://discourse.neo4j.com/t/how-to-format-lists-in-the-node-property-when-using-the-neo4j-admin-import-tool/35766
+# https://neo4j.com/docs/cypher-manual/current/clauses/match/
+
+# CQL multiple returns
+# MATCH (charlie {name: 'Charlie Sheen'})-[:ACTED_IN*1..3]-(movie:Movie)
+# RETURN movie.title
 
 MY_URL_BASE = "en.wikipedia.org/wiki/"
 EDUCATION_TYPE = ["education", "college", "alma mater"]
