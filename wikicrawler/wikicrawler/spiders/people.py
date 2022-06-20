@@ -89,11 +89,6 @@ class PeopleSpider(scrapy.Spider):
     #               'http://en.wikipedia.org/wiki/Charles_Aznavour']
 
     def parse(self, response):
-        all_people_filename = 'all_people.csv'
-        spouses_dict = defaultdict()
-        parents_dict = defaultdict()
-        relatives_dict = defaultdict()
-        offspring_dict = defaultdict()
         people_dict = defaultdict()
 
         # print(response.xpath('//table[contains(@class,"vcard"]'))
